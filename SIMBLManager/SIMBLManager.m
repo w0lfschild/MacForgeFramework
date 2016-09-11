@@ -172,11 +172,23 @@ SIMBLManager* si_SIMBLManager;
     NSMutableDictionary *current = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"SIMBL.osax/Contents/Info" ofType:@"plist"]];
     NSString *locVer = [local objectForKey:@"CFBundleVersion"];
     NSString *curVer = [current objectForKey:@"CFBundleVersion"];
-    NSLog(@"-- SIMBL.osax --\nOld: %@\nNew: %@", locVer, curVer);
+//    NSLog(@"-- SIMBL.osax --\nOld: %@\nNew: %@", locVer, curVer);
     NSDictionary *result = [[NSDictionary alloc]
                             initWithObjectsAndKeys:locVer,@"localVersion",
                             curVer,@"newestVersion",
                             nil];
+    return result;
+}
+
+- (Boolean)OSAX_needsUpdate {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/System/Library/ScriptingAdditions/SIMBL.osax/Contents/Info.plist"])
+        return true;
+    NSMutableDictionary *local = [NSMutableDictionary dictionaryWithContentsOfFile:@"/System/Library/ScriptingAdditions/SIMBL.osax/Contents/Info.plist"];
+    NSMutableDictionary *current = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"SIMBL.osax/Contents/Info" ofType:@"plist"]];
+    NSString *actualVersion = [local objectForKey:@"CFBundleVersion"];
+    NSString *requiredVersion = [current objectForKey:@"CFBundleVersion"];
+    Boolean result = false;
+    if ([requiredVersion compare:actualVersion options:NSNumericSearch] == NSOrderedDescending) result = true;
     return result;
 }
 
@@ -207,12 +219,24 @@ SIMBLManager* si_SIMBLManager;
     return success;
 }
 
+- (Boolean)AGENT_needsUpdate {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/Library/Application Support/SIMBL/SIMBLAgent.app/Contents/Info.plist"])
+        return true;
+    NSMutableDictionary *local = [NSMutableDictionary dictionaryWithContentsOfFile:@"/Library/Application Support/SIMBL/SIMBLAgent.app/Contents/Info.plist"];
+    NSMutableDictionary *current = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"SIMBLAgent.app/Contents/Info" ofType:@"plist"]];
+    NSString *actualVersion = [local objectForKey:@"CFBundleVersion"];
+    NSString *requiredVersion = [current objectForKey:@"CFBundleVersion"];
+    Boolean result = false;
+    if ([requiredVersion compare:actualVersion options:NSNumericSearch] == NSOrderedDescending) result = true;
+    return result;
+}
+
 - (NSDictionary*)AGENT_versions {
     NSMutableDictionary *local = [NSMutableDictionary dictionaryWithContentsOfFile:@"/Library/Application Support/SIMBL/SIMBLAgent.app/Contents/Info.plist"];
     NSMutableDictionary *current = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"SIMBLAgent.app/Contents/Info" ofType:@"plist"]];
     NSString *locVer = [local objectForKey:@"CFBundleVersion"];
     NSString *curVer = [current objectForKey:@"CFBundleVersion"];
-    NSLog(@"-- SIMBLAgent --\nOld: %@\nNew: %@", locVer, curVer);
+//    NSLog(@"-- SIMBLAgent --\nOld: %@\nNew: %@", locVer, curVer);
     NSDictionary *result = [[NSDictionary alloc]
                                  initWithObjectsAndKeys:locVer,@"localVersion",
                                  curVer,@"newestVersion",

@@ -123,7 +123,9 @@ AppDelegate* this;
         }
     }
     
-    NSAppleEventDescriptor *app = [NSAppleEventDescriptor descriptorWithBundleIdentifier:runningApp.bundleIdentifier];
+    int pid = [runningApp processIdentifier];
+    NSAppleEventDescriptor *app = [NSAppleEventDescriptor descriptorWithDescriptorType:typeKernelProcessID bytes:&pid length:sizeof(pid)];
+//    NSAppleEventDescriptor *app = [NSAppleEventDescriptor descriptorWithBundleIdentifier:runningApp.bundleIdentifier];
     NSAppleEventDescriptor *ae;
     OSStatus err;
     
@@ -132,14 +134,14 @@ AppDelegate* this;
                                          targetDescriptor:app
                                                  returnID:kAutoGenerateReturnID
                                             transactionID:kAnyTransactionID];
-    err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDefaultTimeout);
+    err = AESendMessage([ae aeDesc], NULL, kAEWaitReply | kAENeverInteract, kAEDontRecord);
     
     ae = [NSAppleEventDescriptor appleEventWithEventClass:'SIMe'
                                                   eventID:'load'
                                          targetDescriptor:app
                                                  returnID:kAutoGenerateReturnID
                                             transactionID:kAnyTransactionID];
-    err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDefaultTimeout);
+    err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDontRecord);
     
     if ((int)err != 0)
     {
