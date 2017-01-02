@@ -11,6 +11,8 @@
 #import <ScriptingBridge/ScriptingBridge.h>
 #import <Carbon/Carbon.h>
 
+#define BLKLIST @[@"Google Chrome Helper", @"SIMBLAgent", @"osascript"]
+
 AppDelegate* this;
 
 @interface AppDelegate ()
@@ -40,22 +42,23 @@ AppDelegate* this;
     }
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-}
+- (void)applicationWillTerminate:(NSNotification *)aNotification { }
 
 - (void)injectIntoAnchients {
-    /* Do this async because it's bound to be slow */
     /* Lets only try apps because that seems smart */
     for (NSRunningApplication *app in [[NSWorkspace sharedWorkspace] runningApplications])
         if ([app.bundleURL.pathExtension isEqualToString:@"app"])
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ [self injectSIMBL:app]; });
+            [self injectSIMBL:app];
+
+    /* Seemed like it wasn't always loading into loginwindow? */
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            NSRunningApplication *loginWindow = [[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.loginwindow"] firstObject];
+            [self injectSIMBL:loginWindow];
+    });
 }
 
 - (void)applescriptInject:(NSRunningApplication*)runningApp {
     // Using applescript seems to work even though it's slow
-    if ([runningApp.localizedName isEqualToString:@"Google Chrome Helper"])
-        return;
-    
     NSDictionary* errorDict;
     NSString *applescript =  [NSString stringWithFormat:@"\
                               set doesExist to false\n\
@@ -79,11 +82,10 @@ AppDelegate* this;
 
 - (void)injectSIMBL:(NSRunningApplication*)runningApp {
     // Don't inject into self, osascript, jank
-    if ([runningApp.localizedName isEqualToString:@"SIMBLAgent"]) return;
-    if ([runningApp.localizedName isEqualToString:@"osascript"]) return;
+    if ([BLKLIST containsObject:runningApp.localizedName]) return;
     if (!runningApp.executableURL.path.length) return;
     
-    // NOTE: if you change the log level externally, there is pretty much no way
+    // If you change the log level externally, there is pretty much no way
     // to know when the changed. Just reading from the defaults doesn't validate
     // against the backing file very ofter, or so it seems.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -105,37 +107,39 @@ AppDelegate* this;
         return;
     }
     
-    SIMBLLogDebug(@"send inject event");
-    
     // Abort you're running something other than macOS 10.X.X
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion != 10) {
         SIMBLLogNotice(@"something fishy - OS X version %ld", [[NSProcessInfo processInfo] operatingSystemVersion].majorVersion);
         return;
     }
     
-    // System item Inject!
+    // System item Inject
     if ([[runningApp.executableURL.path pathComponents] count] > 0)
     {
         if ([[[runningApp.executableURL.path pathComponents] objectAtIndex:1] isEqualToString:@"System"])
         {
+            SIMBLLogDebug(@"send System process inject event");
             [self applescriptInject:runningApp];
             return;
         }
     }
     
+    SIMBLLogDebug(@"send standard process inject event");
+    
     int pid = [runningApp processIdentifier];
     NSAppleEventDescriptor *app = [NSAppleEventDescriptor descriptorWithDescriptorType:typeKernelProcessID bytes:&pid length:sizeof(pid)];
-//    NSAppleEventDescriptor *app = [NSAppleEventDescriptor descriptorWithBundleIdentifier:runningApp.bundleIdentifier];
     NSAppleEventDescriptor *ae;
     OSStatus err;
     
+    // Initialize applescript
     ae = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
                                                   eventID:kGetAEUT
                                          targetDescriptor:app
                                                  returnID:kAutoGenerateReturnID
                                             transactionID:kAnyTransactionID];
-    err = AESendMessage([ae aeDesc], NULL, kAEWaitReply | kAENeverInteract, kAEDontRecord);
+    err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDontRecord); /* kAEWaitReply ? */
     
+    // Send load applescript
     ae = [NSAppleEventDescriptor appleEventWithEventClass:'SIMe'
                                                   eventID:'load'
                                          targetDescriptor:app
@@ -145,7 +149,7 @@ AppDelegate* this;
     
     if ((int)err != 0)
     {
-        // We've failed 🤔
+        NSLog(@"Injecting into %@ failed, trying system process method", runningApp.localizedName);
         [self applescriptInject:runningApp];
     }
 }
@@ -161,24 +165,6 @@ AppDelegate* this;
         (void) InstallEventHandler(GetApplicationEventTarget(), (EventHandlerUPP) CarbonEventHandler, GetEventTypeCount(kEvents),
                                    kEvents, (__bridge void *)(self), &sCarbonEventsRef);
     }
-}
-
-static OSStatus CarbonEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void* inUserData) {
-    pid_t pid;
-    (void) GetEventParameter(inEvent, kEventParamProcessID, typeKernelProcessID, NULL, sizeof(pid), NULL, &pid);
-    switch ( GetEventKind(inEvent) )
-    {
-        case kEventAppLaunched:
-            // App lauched!
-            [this injectSIMBL:[NSRunningApplication runningApplicationWithProcessIdentifier:pid]];
-            break;
-        case kEventAppTerminated:
-            // App terminated!
-            break;
-        default:
-            assert(false);
-    }
-    return noErr;
 }
 
 - (void)loadInLaunchd {
@@ -201,6 +187,24 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef inHandlerCallRef, EventRe
     {
         SIMBLLogDebug(@"eventDidFail:'%4.4s' error:%@ userInfo:%@", (char*)&(event->descriptorType), error, [error userInfo]);
     }
+}
+
+static OSStatus CarbonEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void* inUserData) {
+    pid_t pid;
+    (void) GetEventParameter(inEvent, kEventParamProcessID, typeKernelProcessID, NULL, sizeof(pid), NULL, &pid);
+    switch ( GetEventKind(inEvent) )
+    {
+        case kEventAppLaunched:
+            // App lauched!
+            [this injectSIMBL:[NSRunningApplication runningApplicationWithProcessIdentifier:pid]];
+            break;
+        case kEventAppTerminated:
+            // App terminated!
+            break;
+        default:
+            assert(false);
+    }
+    return noErr;
 }
 
 @end

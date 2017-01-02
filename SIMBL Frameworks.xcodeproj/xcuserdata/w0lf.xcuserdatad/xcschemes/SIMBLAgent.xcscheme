@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0800"
+   LastUpgradeVersion = "0810"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB8124171D343775007DC7FA"
+               BlueprintIdentifier = "FB81243E1D3439C5007DC7FA"
                BuildableName = "SIMBLAgent.app"
                BlueprintName = "SIMBLAgent"
                ReferencedContainer = "container:SIMBL Frameworks.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB8124171D343775007DC7FA"
+            BlueprintIdentifier = "FB81243E1D3439C5007DC7FA"
             BuildableName = "SIMBLAgent.app"
             BlueprintName = "SIMBLAgent"
             ReferencedContainer = "container:SIMBL Frameworks.xcodeproj">
@@ -55,7 +55,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB8124171D343775007DC7FA"
+            BlueprintIdentifier = "FB81243E1D3439C5007DC7FA"
             BuildableName = "SIMBLAgent.app"
             BlueprintName = "SIMBLAgent"
             ReferencedContainer = "container:SIMBL Frameworks.xcodeproj">
@@ -74,7 +74,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB8124171D343775007DC7FA"
+            BlueprintIdentifier = "FB81243E1D3439C5007DC7FA"
             BuildableName = "SIMBLAgent.app"
             BlueprintName = "SIMBLAgent"
             ReferencedContainer = "container:SIMBL Frameworks.xcodeproj">

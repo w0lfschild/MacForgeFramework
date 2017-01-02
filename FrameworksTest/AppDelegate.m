@@ -76,14 +76,11 @@ sim_c *simc;
 - (void)setupWindow {
     if (![simMan OSAX_installed]) {
         [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
-        [_btn_SIMToggle setTitle:@"Install"];
     } else {
         if (false) {
             [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusPartiallyAvailable]];
-            [_btn_SIMToggle setTitle:@"Update"];
         } else {
             [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusAvailable]];
-            [_btn_SIMToggle setTitle:@"Uninstall"];
         }
     }
     
@@ -95,14 +92,29 @@ sim_c *simc;
     }
 }
 
-- (IBAction)toggleSIMBL:(id)sender {
-    if (![simMan OSAX_installed]) {
-        [simMan SIMBL_install];
-    } else {
-        [simMan SIMBL_remove];
-    }
+- (IBAction)installSIMBL:(id)sender {
+    [simMan SIMBL_install];
     NSLog(@"SIP can't block me 👊");
     [self setupWindow];
 }
+
+- (IBAction)installOSAX:(id)sender {
+    [simMan OSAX_install];
+    NSLog(@"SIP can't block me 👊");
+    [self setupWindow];
+}
+
+- (IBAction)installAgent:(id)sender {
+    [simMan AGENT_install];
+    NSLog(@"SIP can't block me 👊");
+    [self setupWindow];
+}
+
+- (IBAction)removeSIMBL:(id)sender {
+    [simMan SIMBL_remove];
+    NSLog(@"SIP can't block me 👊");
+    [self setupWindow];
+}
+
 
 @end

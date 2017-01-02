@@ -10,6 +10,8 @@
 		FB0607761D1E0731008ECB55 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB0607751D1E0731008ECB55 /* MainMenu.xib */; };
 		FB0FCFD01D52B8150051D214 /* net.culater.SIMBL.Agent.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB0FCFCF1D52B8150051D214 /* net.culater.SIMBL.Agent.plist */; };
 		FB0FCFD11D52BA310051D214 /* SIMBL.sdef in Rez */ = {isa = PBXBuildFile; fileRef = FB0FCFCE1D52B8050051D214 /* SIMBL.sdef */; };
+		FB26115A1E09CF87001C1DC7 /* STPrivilegedTask.h in Headers */ = {isa = PBXBuildFile; fileRef = FB2611581E09CF87001C1DC7 /* STPrivilegedTask.h */; };
+		FB26115B1E09CF87001C1DC7 /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2611591E09CF87001C1DC7 /* STPrivilegedTask.m */; };
 		FB31D4EE1D13AEB30067805D /* SIMBLManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4447B51D10BC5900FAEB6E /* SIMBLManager.framework */; };
 		FB31D4EF1D13AEB30067805D /* SIMBLManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB4447B51D10BC5900FAEB6E /* SIMBLManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB4447B91D10BC5900FAEB6E /* SIMBLManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FB4447B81D10BC5900FAEB6E /* SIMBLManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,8 +26,6 @@
 		FB53F9431D3579B000B07C67 /* sim_c.m in Sources */ = {isa = PBXBuildFile; fileRef = FB53F9411D3579B000B07C67 /* sim_c.m */; };
 		FB8124431D3439C5007DC7FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8124421D3439C5007DC7FA /* AppDelegate.m */; };
 		FB8124461D3439C5007DC7FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8124451D3439C5007DC7FA /* main.m */; };
-		FB8124481D3439C5007DC7FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB8124471D3439C5007DC7FA /* Assets.xcassets */; };
-		FB81244B1D3439C5007DC7FA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB8124491D3439C5007DC7FA /* MainMenu.xib */; };
 		FB81246B1D343A59007DC7FA /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB81246A1D343A59007DC7FA /* AppKit.framework */; };
 		FB81246D1D343A6C007DC7FA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB81246C1D343A6C007DC7FA /* Cocoa.framework */; };
 		FB81247A1D3443FF007DC7FA /* SIMBLAgent.app in Resources */ = {isa = PBXBuildFile; fileRef = FB81243F1D3439C5007DC7FA /* SIMBLAgent.app */; };
@@ -36,7 +36,6 @@
 		FBA000F61D1E067D00AC5C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBA000F01D1E067D00AC5C0C /* Assets.xcassets */; };
 		FBA000F81D1E067D00AC5C0C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA000F31D1E067D00AC5C0C /* AppDelegate.m */; };
 		FBA000F91D1E067D00AC5C0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA000F41D1E067D00AC5C0C /* main.m */; };
-		FBA000FA1D1E067D00AC5C0C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBA000F51D1E067D00AC5C0C /* Info.plist */; };
 		FBB686ED1D24F71100D9BCA5 /* sip_c.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB686EB1D24F71100D9BCA5 /* sip_c.m */; };
 		FBB686EF1D24F72D00D9BCA5 /* sip_c.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB686EE1D24F72D00D9BCA5 /* sip_c.xib */; };
 		FBCC67A91D39FB8B00B30755 /* installSIMBL in Resources */ = {isa = PBXBuildFile; fileRef = FBCC67A81D39FB8B00B30755 /* installSIMBL */; };
@@ -98,6 +97,8 @@
 		FB0607751D1E0731008ECB55 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = FrameworksTest/MainMenu.xib; sourceTree = "<group>"; };
 		FB0FCFCE1D52B8050051D214 /* SIMBL.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SIMBL.sdef; sourceTree = "<group>"; };
 		FB0FCFCF1D52B8150051D214 /* net.culater.SIMBL.Agent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = net.culater.SIMBL.Agent.plist; sourceTree = "<group>"; };
+		FB2611581E09CF87001C1DC7 /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
+		FB2611591E09CF87001C1DC7 /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
 		FB31D4CB1D13ADD30067805D /* SIMBL FrameworksTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SIMBL FrameworksTest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB399D1F1D39EFC200501A89 /* SIMBL.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SIMBL.r; sourceTree = "<group>"; };
 		FB4447B51D10BC5900FAEB6E /* SIMBLManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SIMBLManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,8 +119,6 @@
 		FB8124411D3439C5007DC7FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FB8124421D3439C5007DC7FA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FB8124451D3439C5007DC7FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FB8124471D3439C5007DC7FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FB81244A1D3439C5007DC7FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		FB81244C1D3439C5007DC7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB8124541D3439DB007DC7FA /* SIMBL.osax */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SIMBL.osax; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8124561D3439DC007DC7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -173,16 +172,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB26115C1E09CF8D001C1DC7 /* STPrivilegedTask */ = {
+			isa = PBXGroup;
+			children = (
+				FB2611581E09CF87001C1DC7 /* STPrivilegedTask.h */,
+				FB2611591E09CF87001C1DC7 /* STPrivilegedTask.m */,
+			);
+			name = STPrivilegedTask;
+			sourceTree = "<group>";
+		};
 		FB4447AB1D10BC5900FAEB6E = {
 			isa = PBXGroup;
 			children = (
 				FB53F93F1D35797E00B07C67 /* src */,
+				FB8124691D343A58007DC7FA /* Frameworks */,
 				FBA000EF1D1E066E00AC5C0C /* FrameworksTest */,
 				FB4447B71D10BC5900FAEB6E /* SIMBLManager */,
 				FB8124401D3439C5007DC7FA /* SIMBLAgent */,
 				FB8124551D3439DC007DC7FA /* SIMBL */,
 				FB4447B61D10BC5900FAEB6E /* Products */,
-				FB8124691D343A58007DC7FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -203,6 +211,7 @@
 				FB53F9441D3579B400B07C67 /* sim_c */,
 				FBB686E91D24F59300D9BCA5 /* sip_c */,
 				FB8124821D344466007DC7FA /* installers */,
+				FB26115C1E09CF8D001C1DC7 /* STPrivilegedTask */,
 				FB4447B81D10BC5900FAEB6E /* SIMBLManager.h */,
 				FB4447C01D10BC8400FAEB6E /* SIMBLManager.m */,
 				FB4447BA1D10BC5900FAEB6E /* Info.plist */,
@@ -240,8 +249,6 @@
 				FB8124411D3439C5007DC7FA /* AppDelegate.h */,
 				FB8124421D3439C5007DC7FA /* AppDelegate.m */,
 				FB8124451D3439C5007DC7FA /* main.m */,
-				FB8124471D3439C5007DC7FA /* Assets.xcassets */,
-				FB8124491D3439C5007DC7FA /* MainMenu.xib */,
 				FB0FCFCF1D52B8150051D214 /* net.culater.SIMBL.Agent.plist */,
 				FB81244C1D3439C5007DC7FA /* Info.plist */,
 			);
@@ -308,6 +315,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB4447B91D10BC5900FAEB6E /* SIMBLManager.h in Headers */,
+				FB26115A1E09CF87001C1DC7 /* STPrivilegedTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +402,7 @@
 		FB4447AC1D10BC5900FAEB6E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Wolfgang Baird";
 				TargetAttributes = {
 					FB31D4CA1D13ADD30067805D = {
@@ -450,7 +458,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBA000F61D1E067D00AC5C0C /* Assets.xcassets in Resources */,
-				FBA000FA1D1E067D00AC5C0C /* Info.plist in Resources */,
 				FB0607761D1E0731008ECB55 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,9 +481,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB8124481D3439C5007DC7FA /* Assets.xcassets in Resources */,
 				FB0FCFD01D52B8150051D214 /* net.culater.SIMBL.Agent.plist in Resources */,
-				FB81244B1D3439C5007DC7FA /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +514,7 @@
 			files = (
 				FB53F9431D3579B000B07C67 /* sim_c.m in Sources */,
 				FBB686ED1D24F71100D9BCA5 /* sip_c.m in Sources */,
+				FB26115B1E09CF87001C1DC7 /* STPrivilegedTask.m in Sources */,
 				FB4447C11D10BC8400FAEB6E /* SIMBLManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,17 +561,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		FB8124491D3439C5007DC7FA /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FB81244A1D3439C5007DC7FA /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		FB31D4D91D13ADD30067805D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -608,8 +603,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -656,8 +653,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -727,7 +726,6 @@
 		FB81244D1D3439C5007DC7FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SIMBLAgent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -740,7 +738,6 @@
 		FB81244E1D3439C5007DC7FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SIMBLAgent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

