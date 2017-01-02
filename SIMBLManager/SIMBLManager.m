@@ -285,5 +285,15 @@ SIMBLManager* si_SIMBLManager;
     return success;
 }
 
+- (Boolean)unsign_XCODE
+{
+    return true;
+}
+
+- (Boolean)restore_XCODE
+{
+    return true;
+}
+
 @end
 

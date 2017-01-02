@@ -24,6 +24,7 @@
 		FB53F93E1D35797900B07C67 /* SIMBLPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = FB53F9381D35797900B07C67 /* SIMBLPlugin.m */; };
 		FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB53F9401D3579B000B07C67 /* sim_c.xib */; };
 		FB53F9431D3579B000B07C67 /* sim_c.m in Sources */ = {isa = PBXBuildFile; fileRef = FB53F9411D3579B000B07C67 /* sim_c.m */; };
+		FB76398C1E1A54CD0050409C /* unsign in Resources */ = {isa = PBXBuildFile; fileRef = FB76398B1E1A54CD0050409C /* unsign */; };
 		FB8124431D3439C5007DC7FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8124421D3439C5007DC7FA /* AppDelegate.m */; };
 		FB8124461D3439C5007DC7FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8124451D3439C5007DC7FA /* main.m */; };
 		FB81246B1D343A59007DC7FA /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB81246A1D343A59007DC7FA /* AppKit.framework */; };
@@ -115,6 +116,7 @@
 		FB53F9381D35797900B07C67 /* SIMBLPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SIMBLPlugin.m; path = SIMBLsrc/SIMBLPlugin.m; sourceTree = "<group>"; };
 		FB53F9401D3579B000B07C67 /* sim_c.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = sim_c.xib; sourceTree = "<group>"; };
 		FB53F9411D3579B000B07C67 /* sim_c.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sim_c.m; sourceTree = "<group>"; };
+		FB76398B1E1A54CD0050409C /* unsign */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = unsign; sourceTree = "<group>"; };
 		FB81243F1D3439C5007DC7FA /* SIMBLAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SIMBLAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8124411D3439C5007DC7FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FB8124421D3439C5007DC7FA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 		FB8124821D344466007DC7FA /* installers */ = {
 			isa = PBXGroup;
 			children = (
+				FB76398B1E1A54CD0050409C /* unsign */,
 				FBCC67A81D39FB8B00B30755 /* installSIMBL */,
 				FB81247C1D344460007DC7FA /* installAgent */,
 				FB81247D1D344460007DC7FA /* installOSAX */,
@@ -470,6 +473,7 @@
 				FB8124811D344460007DC7FA /* removeSIMBL in Resources */,
 				FBCC67A91D39FB8B00B30755 /* installSIMBL in Resources */,
 				FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */,
+				FB76398C1E1A54CD0050409C /* unsign in Resources */,
 				FBB686EF1D24F72D00D9BCA5 /* sip_c.xib in Resources */,
 				FB81247A1D3443FF007DC7FA /* SIMBLAgent.app in Resources */,
 				FB81247B1D344405007DC7FA /* SIMBL.osax in Resources */,
