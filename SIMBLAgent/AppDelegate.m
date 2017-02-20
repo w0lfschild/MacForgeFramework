@@ -20,23 +20,38 @@ AppDelegate* this;
 
 @implementation AppDelegate
 
+- (NSString*) runCommand: (NSString*)command {
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/bin/sh"];
+    
+    NSArray *arguments = [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", command], nil];
+    [task setArguments:arguments];
+    
+    NSPipe *pipe = [NSPipe pipe];
+    [task setStandardOutput:pipe];
+    
+    NSFileHandle *file = [pipe fileHandleForReading];
+    
+    [task launch];
+    
+    NSData *data = [file readDataToEndOfFile];
+    
+    NSString *output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return output;
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     this = self;
     NSProcessInfo* procInfo = [NSProcessInfo processInfo];
-    if ([(NSString*)procInfo.arguments.lastObject hasPrefix:@"-psn"])
-    {
+    if ([(NSString*)procInfo.arguments.lastObject hasPrefix:@"-psn"]) {
         // if we were started interactively, load in launchd and terminate
         SIMBLLogNotice(@"installing into launchd");
         [self loadInLaunchd];
         [NSApp terminate:nil];
-    }
-    else
-    {
+    } else {
         SIMBLLogInfo(@"agent started");
-        
         /* Start watching for application launches */
         [self watchForApplications];
-        
         /* Load into apps that existed before we started looking launches */
         [self injectIntoAnchients];
     }
@@ -81,8 +96,11 @@ AppDelegate* this;
 }
 
 - (void)injectSIMBL:(NSRunningApplication*)runningApp {
-    // Don't inject into self, osascript, jank
+    // Hardcoded blacklist
+    /* Probably a good idea to switch to bundleID instead of localizedName */
     if ([BLKLIST containsObject:runningApp.localizedName]) return;
+    
+    // Don't inject if somehow the executable doesn't seem to exist
     if (!runningApp.executableURL.path.length) return;
     
     // If you change the log level externally, there is pretty much no way
@@ -98,11 +116,10 @@ AppDelegate* this;
     // Check to see if there are plugins to load
     if ([SIMBL shouldInstallPluginsIntoApplication:[NSBundle bundleWithURL:runningApp.bundleURL]] == NO) return;
     
-    // Blacklist
+    // User Blacklist
     NSString* appIdentifier = runningApp.bundleIdentifier;
     NSArray* blacklistedIdentifiers = [defaults stringArrayForKey:@"SIMBLApplicationIdentifierBlacklist"];
-    if (blacklistedIdentifiers != nil &&
-        [blacklistedIdentifiers containsObject:appIdentifier]) {
+    if (blacklistedIdentifiers != nil && [blacklistedIdentifiers containsObject:appIdentifier]) {
         SIMBLLogNotice(@"ignoring injection attempt for blacklisted application %@ (%@)", appName, appIdentifier);
         return;
     }
@@ -114,14 +131,10 @@ AppDelegate* this;
     }
     
     // System item Inject
-    if ([[runningApp.executableURL.path pathComponents] count] > 0)
-    {
-        if ([[[runningApp.executableURL.path pathComponents] objectAtIndex:1] isEqualToString:@"System"])
-        {
-            SIMBLLogDebug(@"send System process inject event");
-            [self applescriptInject:runningApp];
-            return;
-        }
+    if ([[[runningApp.executableURL.path pathComponents] firstObject] isEqualToString:@"System"]) {
+        SIMBLLogDebug(@"send system process inject event");
+        [self applescriptInject:runningApp];
+        return;
     }
     
     SIMBLLogDebug(@"send standard process inject event");
@@ -147,10 +160,13 @@ AppDelegate* this;
                                             transactionID:kAnyTransactionID];
     err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDontRecord);
     
-    if ((int)err != 0)
-    {
-        NSLog(@"Injecting into %@ failed, trying system process method", runningApp.localizedName);
-        [self applescriptInject:runningApp];
+    if ((int)err != 0) {
+        NSURL *apath = runningApp.executableURL;
+        NSString *result = [self runCommand:[NSString stringWithFormat:@"/usr/bin/codesign -dv \"%@\" 2>&1", apath.path]];
+        if ([result rangeOfString:@"library-validation"].length)
+            NSLog(@"Injecting into %@ failed due to library-validation", runningApp.localizedName);
+        else
+            [self applescriptInject:runningApp];
     }
 }
 

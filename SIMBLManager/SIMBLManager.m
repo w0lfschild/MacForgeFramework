@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <SIMBLManager.h>
 #import <STPrivilegedTask.h>
+#import <Carbon/Carbon.h>
+#import <ScriptingBridge/ScriptingBridge.h>
+
+#define BLKLIST @[@"Google Chrome Helper", @"SIMBLAgent", @"osascript"]
 
 @interface SIMBLManager ()
 @end
@@ -23,6 +27,26 @@ SIMBLManager* si_SIMBLManager;
         si_SIMBLManager = [[SIMBLManager alloc] init];
     }
     return si_SIMBLManager;
+}
+
+- (NSString*)runCommand:(NSString*)command {
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/bin/sh"];
+    
+    NSArray *arguments = [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", command], nil];
+    [task setArguments:arguments];
+    
+    NSPipe *pipe = [NSPipe pipe];
+    [task setStandardOutput:pipe];
+    
+    NSFileHandle *file = [pipe fileHandleForReading];
+    
+    [task launch];
+    
+    NSData *data = [file readDataToEndOfFile];
+    
+    NSString *output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return output;
 }
 
 - (Boolean)runSTPrivilegedTask:(NSString*)launchPath :(NSArray*)args {
@@ -42,7 +66,6 @@ SIMBLManager* si_SIMBLManager;
     } else {
         result = true;
     }
-    
     return result;
 }
 
@@ -115,56 +138,17 @@ SIMBLManager* si_SIMBLManager;
     return success;
 }
 
-- (void)SIMBL_injectApp:(NSString *)appName :(Boolean)restart {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if (restart) {
-            system([[NSString stringWithFormat:@"killall %@; sleep 1; osascript -e 'tell application \"%@\" to inject SIMBL into Snow Leopard'", appName, appName] UTF8String]);
-        } else {
-            system([[NSString stringWithFormat:@"osascript -e 'tell application \"%@\" to inject SIMBL into Snow Leopard'", appName] UTF8String]);
-        }
-    });
+- (void)SIMBL_injectApp:(NSString *)bundleID :(Boolean)restart {
+    NSRunningApplication *inj = [[NSRunningApplication runningApplicationsWithBundleIdentifier:bundleID] firstObject];
+    if (restart) [inj terminate];
+    [self injectSIMBL:inj];
 }
 
 - (void)SIMBL_injectAll {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        Boolean loadAll = false;
-        NSMutableArray *injectList = [[NSMutableArray alloc] init];
-        NSArray *SIMBLfolders = @[@"/Library/Application Support/SIMBL/Plugins"];
-        for (NSString *path in SIMBLfolders)
-        {
-            for (NSString *bundle in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil])
-            {
-                if (loadAll)
-                    break;
-                NSBundle *pluginBundle  = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/%@", path, bundle]];
-                NSArray *targetsArray   = [[pluginBundle infoDictionary] valueForKey:@"SIMBLTargetApplications"];
-                for (NSDictionary *targetDict in targetsArray)
-                {
-                    if (loadAll)
-                        break;
-                    NSString *targetID = [targetDict objectForKey:@"BundleIdentifier"];
-                    if ([targetID length])
-                    {
-                        if ([targetID isEqualToString:@"*"])
-                            loadAll = true;
-                        NSString *appName = [[NSFileManager defaultManager] displayNameAtPath:[[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:targetID]];
-                        if ([appName length])
-                            if (![injectList containsObject:appName])
-                                [injectList addObject:appName];
-                    }
-                }
-            }
-        }
-        
-        if (loadAll) {
-            for (NSRunningApplication *app in [[NSWorkspace sharedWorkspace] runningApplications])
-                if ([app.bundleURL.pathExtension isEqualToString:@"app"])
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ [self SIMBL_injectApp:[app localizedName] :false]; });
-        } else {
-            for (NSString *appName in injectList)
-                [self SIMBL_injectApp:appName :false];
-        }
-    });
+    /* Lets only try apps because that seems smart */
+    for (NSRunningApplication *app in [[NSWorkspace sharedWorkspace] runningApplications])
+        if ([app.bundleURL.pathExtension isEqualToString:@"app"])
+            [self injectSIMBL:app];
 }
 
 - (Boolean)OSAX_installed {
@@ -285,14 +269,173 @@ SIMBLManager* si_SIMBLManager;
     return success;
 }
 
-- (Boolean)unsign_XCODE
-{
-    return true;
+- (Boolean)lib_ValidationSatus :(NSString*)bundleID {
+    NSString *path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:bundleID];
+    if (!path.length)
+        return true;
+        
+    NSString *codesign = [self runCommand:[NSString stringWithFormat:@"/usr/bin/codesign -dv \"%@\" 2>&1", path]];
+    if ([codesign rangeOfString:@"library-validation"].length != 0)
+        return true;
+    
+    return false;
 }
 
-- (Boolean)restore_XCODE
-{
-    return true;
+- (Boolean)remoValidation:(NSString *)bundleID {
+    BOOL success = false;
+    NSString *path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:bundleID];
+    success = [self runSTPrivilegedTask:@"/bin/sh" :@[[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"libvalpatch" ofType:nil], path]];
+    if (!success) {
+        NSLog(@"Application patch failed");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:@"Application patch failed!"];
+            [alert setInformativeText:@"Something went wrong..."];
+            [alert addButtonWithTitle:@"Ok"];
+            NSLog(@"%ld", (long)[alert runModal]);
+        });
+    } else {
+        NSLog(@"Application patch successful");
+    }
+    return success;
+}
+
+- (Boolean)restValidation:(NSString *)bundleID {
+    BOOL success = false;
+    NSString *path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:bundleID];
+    NSString *signedP = [NSString stringWithFormat:@"%@.signed", path];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:signedP])
+        return false;
+    
+    success = [self runSTPrivilegedTask:@"/bin/sh" :@[[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"libvalpatch" ofType:nil], @"-rs", path]];
+    if (!success) {
+        NSLog(@"Application patch restore failed");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:@"Application patch restore failed!"];
+            [alert setInformativeText:@"Something went wrong..."];
+            [alert addButtonWithTitle:@"Ok"];
+            NSLog(@"%ld", (long)[alert runModal]);
+        });
+    } else {
+        NSLog(@"Application patch restore successful");
+    }
+    return success;
+}
+
+- (void)applescriptInject:(NSRunningApplication*)runningApp {
+    // Using applescript seems to work even though it's slow
+    NSDictionary* errorDict;
+    NSString *applescript =  [NSString stringWithFormat:@"\
+                              set doesExist to false\n\
+                              set appname to \"nill\"\n\
+                              try\n\
+                              tell application \"Finder\"\n\
+                              set appname to name of application file id \"%@\"\n\
+                              set doesExist to true\n\
+                              end tell\n\
+                              on error err_msg number err_num\n\
+                              return 0\n\
+                              end try\n\
+                              if doesExist then\n\
+                              tell application appname to inject SIMBL into Snow Leopard\n\
+                              return appname\n\
+                              end if", runningApp.bundleIdentifier];
+    NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:applescript];
+    if ([[[NSWorkspace sharedWorkspace] runningApplications] containsObject:runningApp])
+        [scriptObject executeAndReturnError:&errorDict];
+}
+
+- (Boolean)shouldLoad:(NSString*)bundleID {
+    Boolean loadAll = false;
+    NSArray *SIMBLfolders = @[@"/Library/Application Support/SIMBL/Plugins"];
+    for (NSString *path in SIMBLfolders)
+    {
+        for (NSString *bundle in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil])
+        {
+            if (loadAll)
+                break;
+            NSBundle *pluginBundle  = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/%@", path, bundle]];
+            NSArray *targetsArray   = [[pluginBundle infoDictionary] valueForKey:@"SIMBLTargetApplications"];
+            for (NSDictionary *targetDict in targetsArray)
+            {
+                if (loadAll)
+                    break;
+                NSString *targetID = [targetDict objectForKey:@"BundleIdentifier"];
+                if ([targetID length])
+                {
+                    if ([targetID isEqualToString:@"*"] || [targetID isEqualToString:bundleID])
+                        loadAll = true;
+                }
+            }
+        }
+    }
+    return loadAll;
+}
+
+- (void)injectSIMBL:(NSRunningApplication*)runningApp {
+    // Don't inject into self, osascript, jank
+    if ([BLKLIST containsObject:runningApp.localizedName]) return;
+    if (!runningApp.executableURL.path.length) return;
+    
+    // If you change the log level externally, there is pretty much no way
+    // to know when the changed. Just reading from the defaults doesn't validate
+    // against the backing file very ofter, or so it seems.
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    
+    // Check to see if there are plugins to load
+    if (![self shouldLoad:runningApp.bundleIdentifier]) return;
+    
+    // Blacklist
+    NSString* appIdentifier = runningApp.bundleIdentifier;
+    NSArray* blacklistedIdentifiers = [defaults stringArrayForKey:@"SIMBLApplicationIdentifierBlacklist"];
+    if (blacklistedIdentifiers != nil &&
+        [blacklistedIdentifiers containsObject:appIdentifier]) {
+        return;
+    }
+    
+    // Abort you're running something other than macOS 10.X.X
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion != 10) {
+        return;
+    }
+    
+    // System item Inject
+    if ([[runningApp.executableURL.path pathComponents] count] > 0)
+    {
+        if ([[[runningApp.executableURL.path pathComponents] objectAtIndex:1] isEqualToString:@"System"])
+        {
+            [self applescriptInject:runningApp];
+            return;
+        }
+    }
+    
+    int pid = [runningApp processIdentifier];
+    NSAppleEventDescriptor *app = [NSAppleEventDescriptor descriptorWithDescriptorType:typeKernelProcessID bytes:&pid length:sizeof(pid)];
+    NSAppleEventDescriptor *ae;
+    OSStatus err;
+    
+    // Initialize applescript
+    ae = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
+                                                  eventID:kGetAEUT
+                                         targetDescriptor:app
+                                                 returnID:kAutoGenerateReturnID
+                                            transactionID:kAnyTransactionID];
+    err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDontRecord); /* kAEWaitReply ? */
+    
+    // Send load applescript
+    ae = [NSAppleEventDescriptor appleEventWithEventClass:'SIMe'
+                                                  eventID:'load'
+                                         targetDescriptor:app
+                                                 returnID:kAutoGenerateReturnID
+                                            transactionID:kAnyTransactionID];
+    err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDontRecord);
+    
+    if ((int)err != 0) {
+        NSLog(@"Injecting into %@ failed, trying system process method", runningApp.localizedName);
+        [self applescriptInject:runningApp];
+    }
 }
 
 @end
