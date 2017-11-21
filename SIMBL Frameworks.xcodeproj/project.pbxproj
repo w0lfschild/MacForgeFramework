@@ -24,6 +24,9 @@
 		FB53F93E1D35797900B07C67 /* SIMBLPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = FB53F9381D35797900B07C67 /* SIMBLPlugin.m */; };
 		FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB53F9401D3579B000B07C67 /* sim_c.xib */; };
 		FB53F9431D3579B000B07C67 /* sim_c.m in Sources */ = {isa = PBXBuildFile; fileRef = FB53F9411D3579B000B07C67 /* sim_c.m */; };
+		FB5ED2411FC3959900A17E55 /* sipvid.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FB5ED2401FC3959900A17E55 /* sipvid.mp4 */; };
+		FB5ED2441FC396D700A17E55 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5ED2431FC396D000A17E55 /* AVKit.framework */; };
+		FB5ED2451FC396DD00A17E55 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5ED2421FC396D000A17E55 /* AVFoundation.framework */; };
 		FB76398C1E1A54CD0050409C /* unsign in Resources */ = {isa = PBXBuildFile; fileRef = FB76398B1E1A54CD0050409C /* unsign */; };
 		FB76398E1E1A56D00050409C /* libvalpatch in Resources */ = {isa = PBXBuildFile; fileRef = FB76398D1E1A56D00050409C /* libvalpatch */; };
 		FB8124431D3439C5007DC7FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8124421D3439C5007DC7FA /* AppDelegate.m */; };
@@ -128,6 +131,9 @@
 		FB53F9381D35797900B07C67 /* SIMBLPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SIMBLPlugin.m; path = SIMBLsrc/SIMBLPlugin.m; sourceTree = "<group>"; };
 		FB53F9401D3579B000B07C67 /* sim_c.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = sim_c.xib; sourceTree = "<group>"; };
 		FB53F9411D3579B000B07C67 /* sim_c.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sim_c.m; sourceTree = "<group>"; };
+		FB5ED2401FC3959900A17E55 /* sipvid.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = sipvid.mp4; path = ../../../Downloads/sipvid.mp4; sourceTree = "<group>"; };
+		FB5ED2421FC396D000A17E55 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FB5ED2431FC396D000A17E55 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		FB76398B1E1A54CD0050409C /* unsign */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = unsign; sourceTree = "<group>"; };
 		FB76398D1E1A56D00050409C /* libvalpatch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = libvalpatch; sourceTree = "<group>"; };
 		FB81243F1D3439C5007DC7FA /* SIMBLAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SIMBLAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +171,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB5ED2451FC396DD00A17E55 /* AVFoundation.framework in Frameworks */,
+				FB5ED2441FC396D700A17E55 /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +231,7 @@
 		FB4447B71D10BC5900FAEB6E /* SIMBLManager */ = {
 			isa = PBXGroup;
 			children = (
+				FB5ED2401FC3959900A17E55 /* sipvid.mp4 */,
 				FB53F9441D3579B400B07C67 /* sim_c */,
 				FBB686E91D24F59300D9BCA5 /* sip_c */,
 				FB8124821D344466007DC7FA /* scripts */,
@@ -283,6 +292,8 @@
 		FB8124691D343A58007DC7FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB5ED2421FC396D000A17E55 /* AVFoundation.framework */,
+				FB5ED2431FC396D000A17E55 /* AVKit.framework */,
 				FB81246C1D343A6C007DC7FA /* Cocoa.framework */,
 				FB81246A1D343A59007DC7FA /* AppKit.framework */,
 			);
@@ -420,7 +431,7 @@
 		FB4447AC1D10BC5900FAEB6E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Wolfgang Baird";
 				TargetAttributes = {
 					FB31D4CA1D13ADD30067805D = {
@@ -489,6 +500,7 @@
 				FBCC67A91D39FB8B00B30755 /* installSIMBL in Resources */,
 				FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */,
 				FB76398C1E1A54CD0050409C /* unsign in Resources */,
+				FB5ED2411FC3959900A17E55 /* sipvid.mp4 in Resources */,
 				FB76398E1E1A56D00050409C /* libvalpatch in Resources */,
 				FBB686EF1D24F72D00D9BCA5 /* sip_c.xib in Resources */,
 				FB81247A1D3443FF007DC7FA /* SIMBLAgent.app in Resources */,
@@ -617,7 +629,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -625,7 +639,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -667,7 +685,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -675,7 +695,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

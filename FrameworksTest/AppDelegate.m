@@ -45,6 +45,7 @@ typedef struct kinfo_proc kinfo_proc;
 
 SIMBLManager *simMan;
 sim_c *simc;
+sip_c *sipc;
 
 static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 // Returns a list of all BSD processes on the system.  This routine
@@ -184,10 +185,9 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
     simMan = [SIMBLManager sharedInstance];
     [self setupWindow];
     
-    if (!simc) {
-        simc = [[sim_c alloc] initWithWindowNibName:@"sim_c"];
-    }
-
+    if (!simc) simc = [[sim_c alloc] initWithWindowNibName:@"sim_c"];
+    if (!sipc) sipc = [[sip_c alloc] initWithWindowNibName:@"sip_c"];
+    
     NSArray *procs = [self getBSDProcessList];
     for (NSDictionary* taco in procs) {
         if ([[taco objectForKey:@"pname"] isEqualToString:@"avconferenced"]) {
@@ -195,7 +195,7 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
         }
     }
     
-    //    [simc showWindow:self];
+    [sipc showWindow:self];
     
 //    CGRect dlframe = [[simc window] frame];
 //    CGRect apframe = [self.window frame];
@@ -226,6 +226,8 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 }
 
 - (void)setupWindow {
+//    sip_c
+    
     if (![simMan OSAX_installed]) {
         [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
     } else {

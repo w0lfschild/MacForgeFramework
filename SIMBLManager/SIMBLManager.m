@@ -21,9 +21,11 @@
 
 SIMBLManager* si_SIMBLManager;
 
-+ (SIMBLManager*) sharedInstance {
++ (SIMBLManager*) sharedInstance
+{
     static SIMBLManager* si_SIMBLManager = nil;
-    if (si_SIMBLManager == nil) {
+    if (si_SIMBLManager == nil)
+    {
         si_SIMBLManager = [[SIMBLManager alloc] init];
     }
     return si_SIMBLManager;

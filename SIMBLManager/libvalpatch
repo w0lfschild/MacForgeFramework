@@ -15,7 +15,6 @@ createFolder "$log_dir"
 exec &>"$log_dir"/unsign.log
 
 if [ $# -ne 0 ]; then
-
     if [[ "$1" == "-rs" ]]; then
         #restore signed
         binaryPath="$2"
@@ -43,7 +42,6 @@ if [ $# -ne 0 ]; then
             echo "Failed";
         fi
     fi
-
 fi
 
 echo "Done"
