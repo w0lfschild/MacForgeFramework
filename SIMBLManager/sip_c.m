@@ -10,8 +10,11 @@
 #import "SIMBLManager.h"
 @import AVKit;
 @import AVFoundation;
+@import AppKit;
 
 @interface sip_c ()
+
+@property IBOutlet NSTextField *tv;
 
 @end
 
@@ -24,13 +27,25 @@
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
-//        NSURL* videoURL = [[NSBundle bundleForClass:[SIMBLManager class]] URLForResource:@"sipvid" withExtension:@"mp4"];
-//        self.video.player = [AVPlayer playerWithURL:videoURL];
     }
     return self;
 }
 
 - (void)awakeFromNib {
+    [[self window] setBackgroundColor:[NSColor whiteColor]];
+    [[self window] setMovableByWindowBackground:true];
+    [[self window] setLevel:NSFloatingWindowLevel];
+    [[self window] setTitle:@""];
+    [[self confirm] setKeyEquivalent:@"\r"];
+    
+    NSError *err;
+    NSString *app = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    if (app == nil) app = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+    if (app == nil) app = @"macOS Plugin Framework";
+    NSString *text = [NSString stringWithContentsOfURL:[[NSBundle bundleForClass:[SIMBLManager class]] URLForResource:@"eng_sip" withExtension:@"txt"] encoding:NSUTF8StringEncoding error:&err];
+    text = [text stringByReplacingOccurrencesOfString:@"<appname>" withString:app];
+    [_tv setStringValue:text];
+    
     NSURL* videoURL = [[NSBundle bundleForClass:[SIMBLManager class]] URLForResource:@"sipvid" withExtension:@"mp4"];
     AVPlayer *player = [AVPlayer playerWithURL:videoURL];
     AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
@@ -57,12 +72,10 @@
 }
 
 - (IBAction)iconfirm:(id)sender {
-    NSLog(@"%@", NSStringFromRect(self.window.frame));
     [self close];
 }
 
-- (void)windowDidLoad
-{
+- (void)windowDidLoad {
     [super windowDidLoad];
 }
 @end

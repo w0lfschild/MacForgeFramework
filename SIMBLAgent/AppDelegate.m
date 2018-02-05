@@ -161,12 +161,9 @@ AppDelegate* this;
     err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDontRecord);
     
     if ((int)err != 0) {
-        NSURL *apath = runningApp.executableURL;
-        NSString *result = [self runCommand:[NSString stringWithFormat:@"/usr/bin/codesign -dv \"%@\" 2>&1", apath.path]];
-        if ([result rangeOfString:@"library-validation"].length)
-            NSLog(@"Injecting into %@ failed due to library-validation", runningApp.localizedName);
-        else
-            [self applescriptInject:runningApp];
+        // Try to inject via applescript
+        NSLog(@"Injecting into %@ failed trying applescript...", runningApp.localizedName);
+        [self applescriptInject:runningApp];
     }
 }
 

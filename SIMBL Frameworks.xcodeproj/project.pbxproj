@@ -45,6 +45,8 @@
 		FBB686ED1D24F71100D9BCA5 /* sip_c.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB686EB1D24F71100D9BCA5 /* sip_c.m */; };
 		FBB686EF1D24F72D00D9BCA5 /* sip_c.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB686EE1D24F72D00D9BCA5 /* sip_c.xib */; };
 		FBCC67A91D39FB8B00B30755 /* installSIMBL in Resources */ = {isa = PBXBuildFile; fileRef = FBCC67A81D39FB8B00B30755 /* installSIMBL */; };
+		FBDD85321FD26F06007EE5C4 /* eng_sip.txt in Resources */ = {isa = PBXBuildFile; fileRef = FBDD85311FD26F06007EE5C4 /* eng_sip.txt */; };
+		FBDD85341FD27492007EE5C4 /* eng_sim.txt in Resources */ = {isa = PBXBuildFile; fileRef = FBDD85331FD27492007EE5C4 /* eng_sim.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -156,6 +158,8 @@
 		FBB686EB1D24F71100D9BCA5 /* sip_c.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sip_c.m; sourceTree = "<group>"; };
 		FBB686EE1D24F72D00D9BCA5 /* sip_c.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = sip_c.xib; sourceTree = "<group>"; };
 		FBCC67A81D39FB8B00B30755 /* installSIMBL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = installSIMBL; sourceTree = "<group>"; };
+		FBDD85311FD26F06007EE5C4 /* eng_sip.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eng_sip.txt; sourceTree = "<group>"; };
+		FBDD85331FD27492007EE5C4 /* eng_sim.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eng_sim.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +267,7 @@
 			children = (
 				FB53F9411D3579B000B07C67 /* sim_c.m */,
 				FB53F9401D3579B000B07C67 /* sim_c.xib */,
+				FBDD85331FD27492007EE5C4 /* eng_sim.txt */,
 			);
 			name = sim_c;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 			children = (
 				FBB686EB1D24F71100D9BCA5 /* sip_c.m */,
 				FBB686EE1D24F72D00D9BCA5 /* sip_c.xib */,
+				FBDD85311FD26F06007EE5C4 /* eng_sip.txt */,
 			);
 			name = sip_c;
 			sourceTree = "<group>";
@@ -498,11 +504,13 @@
 				FB8124801D344460007DC7FA /* installOSAX in Resources */,
 				FB8124811D344460007DC7FA /* removeSIMBL in Resources */,
 				FBCC67A91D39FB8B00B30755 /* installSIMBL in Resources */,
+				FBDD85321FD26F06007EE5C4 /* eng_sip.txt in Resources */,
 				FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */,
 				FB76398C1E1A54CD0050409C /* unsign in Resources */,
 				FB5ED2411FC3959900A17E55 /* sipvid.mp4 in Resources */,
 				FB76398E1E1A56D00050409C /* libvalpatch in Resources */,
 				FBB686EF1D24F72D00D9BCA5 /* sip_c.xib in Resources */,
+				FBDD85341FD27492007EE5C4 /* eng_sim.txt in Resources */,
 				FB81247A1D3443FF007DC7FA /* SIMBLAgent.app in Resources */,
 				FB81247B1D344405007DC7FA /* SIMBL.osax in Resources */,
 				FB81247F1D344460007DC7FA /* installAgent in Resources */,
@@ -601,7 +609,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = FrameworksTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLManagerTeast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -614,7 +622,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = FrameworksTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLManagerTeast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -667,7 +675,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -717,7 +725,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -741,7 +749,7 @@
 				INFOPLIST_FILE = SIMBLManager/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -764,7 +772,7 @@
 				INFOPLIST_FILE = SIMBLManager/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -777,7 +785,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SIMBLAgent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -789,7 +797,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SIMBLAgent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -801,7 +809,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SIMBL/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -815,7 +823,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SIMBL/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

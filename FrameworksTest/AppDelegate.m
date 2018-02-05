@@ -47,6 +47,8 @@ SIMBLManager *simMan;
 sim_c *simc;
 sip_c *sipc;
 
+/*
+
 static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 // Returns a list of all BSD processes on the system.  This routine
 // allocates the list and puts it in *procList and a count of the
@@ -176,6 +178,8 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
     return ret;
 }
 
+ */
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
 }
@@ -188,14 +192,16 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
     if (!simc) simc = [[sim_c alloc] initWithWindowNibName:@"sim_c"];
     if (!sipc) sipc = [[sip_c alloc] initWithWindowNibName:@"sip_c"];
     
-    NSArray *procs = [self getBSDProcessList];
-    for (NSDictionary* taco in procs) {
-        if ([[taco objectForKey:@"pname"] isEqualToString:@"avconferenced"]) {
-            NSLog(@"%@", taco);
-        }
-    }
+//    NSArray *procs = [self getBSDProcessList];
+//    for (NSDictionary* taco in procs) {
+//        NSLog(@"%@", taco);
+//        if ([[taco objectForKey:@"pname"] isEqualToString:@"avconferenced"]) {
+//            NSLog(@"%@", taco);
+//        }
+//    }
     
-    [sipc showWindow:self];
+    [simc showWindow:self];
+//    [sipc showWindow:self];
     
 //    CGRect dlframe = [[simc window] frame];
 //    CGRect apframe = [self.window frame];
@@ -226,16 +232,11 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 }
 
 - (void)setupWindow {
-//    sip_c
-    
     if (![simMan OSAX_installed]) {
         [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
     } else {
-        if (false) {
-            [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusPartiallyAvailable]];
-        } else {
-            [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusAvailable]];
-        }
+//        NSImageNameStatusPartiallyAvailable
+        [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusAvailable]];
     }
     
     if (![simMan lib_ValidationSatus:@"com.apple.dt.Xcode"]) {
@@ -250,8 +251,7 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
         [_status_Safari setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
     }
     
-    if ([simMan SIP_enabled])
-    {
+    if ([simMan SIP_enabled]) {
         [_status_SIP setImage:[NSImage imageNamed:NSImageNameStatusAvailable]];
     } else {
         [_status_SIP setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
