@@ -1,4 +1,4 @@
-<appname> needs to update it's System components. If these components are not updated, <appname> may fail to function or not work properly.
+<appname> needs to update some components on your system. If these components are not installed, <appname> may fail to function properly or not work at all.
 
 <appname> has determined that System Integrity Protection is enabled on your system.
 

@@ -28,7 +28,7 @@
 		FB5ED2441FC396D700A17E55 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5ED2431FC396D000A17E55 /* AVKit.framework */; };
 		FB5ED2451FC396DD00A17E55 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5ED2421FC396D000A17E55 /* AVFoundation.framework */; };
 		FB76398C1E1A54CD0050409C /* unsign in Resources */ = {isa = PBXBuildFile; fileRef = FB76398B1E1A54CD0050409C /* unsign */; };
-		FB76398E1E1A56D00050409C /* libvalpatch in Resources */ = {isa = PBXBuildFile; fileRef = FB76398D1E1A56D00050409C /* libvalpatch */; };
+		FB76398E1E1A56D00050409C /* amfiswitch in Resources */ = {isa = PBXBuildFile; fileRef = FB76398D1E1A56D00050409C /* amfiswitch */; };
 		FB8124431D3439C5007DC7FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8124421D3439C5007DC7FA /* AppDelegate.m */; };
 		FB8124461D3439C5007DC7FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8124451D3439C5007DC7FA /* main.m */; };
 		FB81246B1D343A59007DC7FA /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB81246A1D343A59007DC7FA /* AppKit.framework */; };
@@ -39,6 +39,8 @@
 		FB8124801D344460007DC7FA /* installOSAX in Resources */ = {isa = PBXBuildFile; fileRef = FB81247D1D344460007DC7FA /* installOSAX */; };
 		FB8124811D344460007DC7FA /* removeSIMBL in Resources */ = {isa = PBXBuildFile; fileRef = FB81247E1D344460007DC7FA /* removeSIMBL */; };
 		FB8A5E341E346361008A9B06 /* SIMBL.sdef in CopyFiles */ = {isa = PBXBuildFile; fileRef = FB0FCFCE1D52B8050051D214 /* SIMBL.sdef */; };
+		FB9FFF16205DB9CA00264E56 /* NSString+Size.h in Headers */ = {isa = PBXBuildFile; fileRef = FB9FFF14205DB9CA00264E56 /* NSString+Size.h */; };
+		FB9FFF17205DB9CA00264E56 /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = FB9FFF15205DB9CA00264E56 /* NSString+Size.m */; };
 		FBA000F61D1E067D00AC5C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBA000F01D1E067D00AC5C0C /* Assets.xcassets */; };
 		FBA000F81D1E067D00AC5C0C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA000F31D1E067D00AC5C0C /* AppDelegate.m */; };
 		FBA000F91D1E067D00AC5C0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA000F41D1E067D00AC5C0C /* main.m */; };
@@ -137,7 +139,7 @@
 		FB5ED2421FC396D000A17E55 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FB5ED2431FC396D000A17E55 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		FB76398B1E1A54CD0050409C /* unsign */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = unsign; sourceTree = "<group>"; };
-		FB76398D1E1A56D00050409C /* libvalpatch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = libvalpatch; sourceTree = "<group>"; };
+		FB76398D1E1A56D00050409C /* amfiswitch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = amfiswitch; sourceTree = "<group>"; };
 		FB81243F1D3439C5007DC7FA /* SIMBLAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SIMBLAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8124411D3439C5007DC7FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FB8124421D3439C5007DC7FA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -150,6 +152,8 @@
 		FB81247C1D344460007DC7FA /* installAgent */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = installAgent; sourceTree = "<group>"; };
 		FB81247D1D344460007DC7FA /* installOSAX */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = installOSAX; sourceTree = "<group>"; };
 		FB81247E1D344460007DC7FA /* removeSIMBL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = removeSIMBL; sourceTree = "<group>"; };
+		FB9FFF14205DB9CA00264E56 /* NSString+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Size.h"; sourceTree = "<group>"; };
+		FB9FFF15205DB9CA00264E56 /* NSString+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Size.m"; sourceTree = "<group>"; };
 		FBA000F01D1E067D00AC5C0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = FrameworksTest/Assets.xcassets; sourceTree = "<group>"; };
 		FBA000F21D1E067D00AC5C0C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FrameworksTest/AppDelegate.h; sourceTree = "<group>"; };
 		FBA000F31D1E067D00AC5C0C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = FrameworksTest/AppDelegate.m; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 				FB53F9441D3579B400B07C67 /* sim_c */,
 				FBB686E91D24F59300D9BCA5 /* sip_c */,
 				FB8124821D344466007DC7FA /* scripts */,
+				FB9FFF18205DC30900264E56 /* NSString+Size */,
 				FB26115C1E09CF8D001C1DC7 /* STPrivilegedTask */,
 				FB4447B81D10BC5900FAEB6E /* SIMBLManager.h */,
 				FB4447C01D10BC8400FAEB6E /* SIMBLManager.m */,
@@ -309,13 +314,22 @@
 			isa = PBXGroup;
 			children = (
 				FB76398B1E1A54CD0050409C /* unsign */,
-				FB76398D1E1A56D00050409C /* libvalpatch */,
+				FB76398D1E1A56D00050409C /* amfiswitch */,
 				FBCC67A81D39FB8B00B30755 /* installSIMBL */,
 				FB81247C1D344460007DC7FA /* installAgent */,
 				FB81247D1D344460007DC7FA /* installOSAX */,
 				FB81247E1D344460007DC7FA /* removeSIMBL */,
 			);
 			name = scripts;
+			sourceTree = "<group>";
+		};
+		FB9FFF18205DC30900264E56 /* NSString+Size */ = {
+			isa = PBXGroup;
+			children = (
+				FB9FFF14205DB9CA00264E56 /* NSString+Size.h */,
+				FB9FFF15205DB9CA00264E56 /* NSString+Size.m */,
+			);
+			name = "NSString+Size";
 			sourceTree = "<group>";
 		};
 		FBA000EF1D1E066E00AC5C0C /* FrameworksTest */ = {
@@ -349,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB4447B91D10BC5900FAEB6E /* SIMBLManager.h in Headers */,
+				FB9FFF16205DB9CA00264E56 /* NSString+Size.h in Headers */,
 				FB26115A1E09CF87001C1DC7 /* STPrivilegedTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,7 +459,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = EX596BNL45;
 						DevelopmentTeamName = "wolfgang baird";
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					FB4447B41D10BC5900FAEB6E = {
 						CreatedOnToolsVersion = 8.0;
@@ -456,13 +471,13 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = EX596BNL45;
 						DevelopmentTeamName = "wolfgang baird";
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					FB8124531D3439DB007DC7FA = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = EX596BNL45;
 						DevelopmentTeamName = "wolfgang baird";
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -508,7 +523,7 @@
 				FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */,
 				FB76398C1E1A54CD0050409C /* unsign in Resources */,
 				FB5ED2411FC3959900A17E55 /* sipvid.mp4 in Resources */,
-				FB76398E1E1A56D00050409C /* libvalpatch in Resources */,
+				FB76398E1E1A56D00050409C /* amfiswitch in Resources */,
 				FBB686EF1D24F72D00D9BCA5 /* sip_c.xib in Resources */,
 				FBDD85341FD27492007EE5C4 /* eng_sim.txt in Resources */,
 				FB81247A1D3443FF007DC7FA /* SIMBLAgent.app in Resources */,
@@ -556,6 +571,7 @@
 				FBB686ED1D24F71100D9BCA5 /* sip_c.m in Sources */,
 				FB26115B1E09CF87001C1DC7 /* STPrivilegedTask.m in Sources */,
 				FB4447C11D10BC8400FAEB6E /* SIMBLManager.m in Sources */,
+				FB9FFF17205DB9CA00264E56 /* NSString+Size.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,12 +622,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
 				INFOPLIST_FILE = FrameworksTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLManagerTeast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -619,12 +639,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
 				INFOPLIST_FILE = FrameworksTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLManagerTeast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -738,7 +762,8 @@
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = EX596BNL45;
@@ -752,6 +777,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -761,7 +787,8 @@
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = EX596BNL45;
@@ -775,6 +802,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -782,36 +810,48 @@
 		FB81244D1D3439C5007DC7FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
 				INFOPLIST_FILE = SIMBLAgent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		FB81244E1D3439C5007DC7FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
 				INFOPLIST_FILE = SIMBLAgent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBLAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 		FB8124581D3439DC007DC7FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
 				INFOPLIST_FILE = SIMBL/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = osax;
 			};
@@ -820,12 +860,16 @@
 		FB8124591D3439DC007DC7FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
 				INFOPLIST_FILE = SIMBL/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.SIMBL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = osax;
 			};

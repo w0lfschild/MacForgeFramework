@@ -200,7 +200,22 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 //        }
 //    }
     
-    [simc showWindow:self];
+//    [simc showWindow:self];
+//    [simc displayInWindow:self.window];
+    
+    [simMan AMFI_enabled];
+    
+    [simc displayInWindow:self.window];
+    [sipc displayInWindow:self.window];
+
+//    [simc.confirm setAction:@selector(confirmQuit:)];
+
+//    NSWindow *simblWindow = simc.window;
+//    NSPoint childOrigin = self.window.frame.origin;
+//    childOrigin.y += self.window.frame.size.height/2 - simblWindow.frame.size.height/2;
+//    childOrigin.x += self.window.frame.size.width/2 - simblWindow.frame.size.width/2;
+//    [self.window addChildWindow:simblWindow ordered:NSWindowAbove];
+//    [simblWindow setFrameOrigin:childOrigin];
 //    [sipc showWindow:self];
     
 //    CGRect dlframe = [[simc window] frame];

@@ -71,23 +71,62 @@ SIMBLManager* si_SIMBLManager;
     return result;
 }
 
+- (Boolean)AMFI_enabled {
+    BOOL result = true;
+    
+    NSPipe *pipe = [NSPipe pipe];
+    NSFileHandle *file = pipe.fileHandleForReading;
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = @"/bin/sh";
+    task.arguments = @[@"-c", @"nvram boot-args 2>&1"];
+    task.standardOutput = pipe;
+    [task launch];
+    NSData *data = [file readDataToEndOfFile];
+    [file closeFile];
+    NSString *output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+    if ([output rangeOfString:@"amfi_get_out_of_my_way=1"].length)
+        result = false;
+    
+    return result;
+}
+
+- (Boolean)AMFI_toggle {
+    BOOL success = false;
+    if (![self SIP_enabled]) {
+        NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"amfiswitch" ofType:nil]];
+        success = [self runSTPrivilegedTask:@"/bin/sh" :args];
+    }
+    if (!success) {
+        NSLog(@"AMFI switch failed");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:@"AMFI switch failed"];
+            [alert setInformativeText:@"Something went wrong..."];
+            [alert addButtonWithTitle:@"Ok"];
+            NSLog(@"%ld", (long)[alert runModal]);
+        });
+    } else {
+        NSLog(@"AMFI switch successful");
+    }
+    return success;
+}
+
 - (Boolean)SIP_enabled {
     BOOL result = false;
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].minorVersion >= 11)
-    {
-        NSPipe *pipe = [NSPipe pipe];
-        NSFileHandle *file = pipe.fileHandleForReading;
-        NSTask *task = [[NSTask alloc] init];
-        task.launchPath = @"/bin/sh";
-        task.arguments = @[@"-c", @"touch /System/test 2>&1"];
-        task.standardOutput = pipe;
-        [task launch];
-        NSData *data = [file readDataToEndOfFile];
-        [file closeFile];
-        NSString *output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-        if ([output rangeOfString:@"Operation not permitted"].length)
-            result = true;
-    }
+    
+    NSPipe *pipe = [NSPipe pipe];
+    NSFileHandle *file = pipe.fileHandleForReading;
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = @"/bin/sh";
+    task.arguments = @[@"-c", @"touch /System/test 2>&1"];
+    task.standardOutput = pipe;
+    [task launch];
+    NSData *data = [file readDataToEndOfFile];
+    [file closeFile];
+    NSString *output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+    if ([output rangeOfString:@"Operation not permitted"].length)
+        result = true;
+    
     return result;
 }
 
@@ -125,15 +164,12 @@ SIMBLManager* si_SIMBLManager;
     if (minor == 12) {
         if (![self SIP_enabled])
             return [self runSTPrivilegedTask:@"/bin/sh" :[NSArray arrayWithObjects:[bundl pathForResource:@"hid" ofType:nil], @"logout", @"persist", nil]];
-        
         return true;
     }
     
     if (minor == 13) {
         if (patch > 1)
             return false;
-        
-        
     }
     
     return false;
@@ -141,10 +177,10 @@ SIMBLManager* si_SIMBLManager;
 
 - (Boolean)SIMBL_install {
     BOOL success = false;
-    if (![self SIP_enabled]) {
-        NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installSIMBL" ofType:nil]];
-        success = [self runSTPrivilegedTask:@"/bin/sh" :args];
-    }
+   
+    NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installSIMBL" ofType:nil]];
+    success = [self runSTPrivilegedTask:@"/bin/sh" :args];
+    
     if (!success) {
         NSLog(@"SIMBL install failed");
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -179,10 +215,10 @@ SIMBLManager* si_SIMBLManager;
 
 - (Boolean)OSAX_install {
     BOOL success = false;
-    if (![self SIP_enabled]) {
-        NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installOSAX" ofType:nil]];
-        success = [self runSTPrivilegedTask:@"/bin/sh" :args];
-    }
+
+    NSArray *args = [NSArray arrayWithObject:[[NSBundle bundleForClass:[SIMBLManager class]] pathForResource:@"installOSAX" ofType:nil]];
+    success = [self runSTPrivilegedTask:@"/bin/sh" :args];
+    
     if (!success) {
         NSLog(@"SIMBL.osax install failed");
         dispatch_async(dispatch_get_main_queue(), ^{

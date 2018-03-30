@@ -79,16 +79,18 @@ AppDelegate* this;
                               set doesExist to false\n\
                               set appname to \"nill\"\n\
                               try\n\
-                                tell application \"Finder\"\n\
-                                    set appname to name of application file id \"%@\"\n\
-                                    set doesExist to true\n\
-                                end tell\n\
+                                  tell application \"Finder\"\n\
+                                      set appname to name of application file id \"%@\"\n\
+                                      set doesExist to true\n\
+                                  end tell\n\
                               on error err_msg number err_num\n\
-                                return 0\n\
+                                  return 0\n\
                               end try\n\
                               if doesExist then\n\
-                                tell application appname to inject SIMBL into Snow Leopard\n\
-                                return appname\n\
+                                  with timeout of 2 seconds\n\
+                                      tell application appname to inject SIMBL into Snow Leopard\n\
+                                  end timeout\n\
+                                  return appname\n\
                               end if", runningApp.bundleIdentifier];
     NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:applescript];
     if ([[[NSWorkspace sharedWorkspace] runningApplications] containsObject:runningApp])

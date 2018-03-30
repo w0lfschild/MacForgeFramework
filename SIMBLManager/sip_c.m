@@ -13,8 +13,22 @@
 @import AppKit;
 
 @interface sip_c ()
-
 @property IBOutlet NSTextField *tv;
+@end
+
+@interface NoInteractPlayer : AVPlayerView
+
+@end
+
+@implementation NoInteractPlayer
+
+- (void)scrollWheel:(NSEvent *)event {
+    // Do nothing...
+}
+
+- (void)keyDown:(NSEvent *)event {
+    // Do nothing...
+}
 
 @end
 
@@ -49,8 +63,9 @@
     NSURL* videoURL = [[NSBundle bundleForClass:[SIMBLManager class]] URLForResource:@"sipvid" withExtension:@"mp4"];
     AVPlayer *player = [AVPlayer playerWithURL:videoURL];
     AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+//    player setresp
     
-    AVPlayerView *playerView = [[AVPlayerView alloc] initWithFrame:CGRectMake(50, 70, 500, 250)];
+    NoInteractPlayer *playerView = [[NoInteractPlayer alloc] initWithFrame:CGRectMake(50, 70, 500, 250)];
     [[self.window contentView] addSubview:playerView];
     
     [playerView setControlsStyle:AVPlayerViewControlsStyleNone];
@@ -63,19 +78,35 @@
     
     playerLayer.frame = playerView.bounds;
     [playerView.layer addSublayer:playerLayer];
+    
     [player play];
+}
+
+- (void)displayInWindow:(NSWindow*)window {
+    NSWindow *simblWindow = self.window;
+    NSPoint childOrigin = window.frame.origin;
+    childOrigin.y += window.frame.size.height/2 - simblWindow.frame.size.height/2;
+    childOrigin.x += window.frame.size.width/2 - simblWindow.frame.size.width/2;
+    [window addChildWindow:simblWindow ordered:NSWindowAbove];
+    [simblWindow setFrameOrigin:childOrigin];
 }
 
 - (void)playerItemDidReachEnd:(NSNotification *)notification {
     AVPlayerItem *p = [notification object];
-    [p seekToTime:kCMTimeZero];
+    [p seekToTime:CMTimeMake(0, p.asset.duration.timescale)];
 }
 
 - (IBAction)iconfirm:(id)sender {
     [self close];
 }
-
+    
+- (IBAction)confirmQuit:(id)sender {
+    [self close];
+    [NSApp terminate:nil];
+}
+    
 - (void)windowDidLoad {
     [super windowDidLoad];
 }
+    
 @end
