@@ -43,6 +43,9 @@ AppDelegate* this;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     this = self;
     NSProcessInfo* procInfo = [NSProcessInfo processInfo];
+
+    NSLog(@"howdy startup...");
+    
     if ([(NSString*)procInfo.arguments.lastObject hasPrefix:@"-psn"]) {
         // if we were started interactively, load in launchd and terminate
         SIMBLLogNotice(@"installing into launchd");
@@ -207,8 +210,7 @@ AppDelegate* this;
 static OSStatus CarbonEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void* inUserData) {
     pid_t pid;
     (void) GetEventParameter(inEvent, kEventParamProcessID, typeKernelProcessID, NULL, sizeof(pid), NULL, &pid);
-    switch ( GetEventKind(inEvent) )
-    {
+    switch ( GetEventKind(inEvent) ) {
         case kEventAppLaunched:
             // App lauched!
             [this injectSIMBL:[NSRunningApplication runningApplicationWithProcessIdentifier:pid]];

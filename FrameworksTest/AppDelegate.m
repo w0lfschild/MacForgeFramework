@@ -27,17 +27,19 @@ typedef struct kinfo_proc kinfo_proc;
 
 @property (weak) IBOutlet NSWindow *window;
 
-@property (weak) IBOutlet NSImageView *status_SIM;
-@property (weak) IBOutlet NSImageView *status_SIP;
-    
-@property (weak) IBOutlet NSImageView *status_Xcode;
-@property (weak) IBOutlet NSImageView *status_Safari;
+@property (weak) IBOutlet NSButton *status_SIM;
+@property (weak) IBOutlet NSButton *status_AGent;
+@property (weak) IBOutlet NSButton *status_SIP;
+@property (weak) IBOutlet NSButton *status_AMFI;
+
 
 @property (weak) IBOutlet NSButton *btn_SIMLoad;
 @property (weak) IBOutlet NSButton *btn_SIPInject;
-
 @property (weak) IBOutlet NSButton *btn_SIPToggle;
 @property (weak) IBOutlet NSButton *btn_SIMToggle;
+
+@property (weak) IBOutlet NSView *view_fill;
+
 
 @end
 
@@ -200,13 +202,14 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 //        }
 //    }
     
+    [simc addtoView:_view_fill];
+    
 //    [simc showWindow:self];
 //    [simc displayInWindow:self.window];
     
-    [simMan AMFI_enabled];
-    
-    [simc displayInWindow:self.window];
-    [sipc displayInWindow:self.window];
+//    [simMan AMFI_enabled];
+//    [simc displayInWindow:self.window];
+//    [sipc displayInWindow:self.window];
 
 //    [simc.confirm setAction:@selector(confirmQuit:)];
 
@@ -247,53 +250,52 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 }
 
 - (void)setupWindow {
-    if (![simMan OSAX_installed]) {
-        [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
-    } else {
-//        NSImageNameStatusPartiallyAvailable
-        [_status_SIM setImage:[NSImage imageNamed:NSImageNameStatusAvailable]];
-    }
+    if ([simMan AGENT_installed])
+        _status_AGent.state = NSOnState;
+    else
+        _status_AGent.state = NSOffState;
     
-    if (![simMan lib_ValidationSatus:@"com.apple.dt.Xcode"]) {
-        [_status_Xcode setImage:[NSImage imageNamed:NSImageNameStatusAvailable]];
-    } else {
-        [_status_Xcode setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
-    }
+    if ([simMan OSAX_installed])
+        _status_SIM.state = NSOnState;
+    else
+        _status_SIM.state = NSOffState;
     
-    if (![simMan lib_ValidationSatus:@"com.apple.SafariTechnologyPreview"]) {
-        [_status_Safari setImage:[NSImage imageNamed:NSImageNameStatusAvailable]];
-    } else {
-        [_status_Safari setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
-    }
+    if ([simMan AMFI_enabled])
+        _status_AMFI.state = NSOnState;
+    else
+        _status_AMFI.state = NSOffState;
     
-    if ([simMan SIP_enabled]) {
-        [_status_SIP setImage:[NSImage imageNamed:NSImageNameStatusAvailable]];
-    } else {
-        [_status_SIP setImage:[NSImage imageNamed:NSImageNameStatusUnavailable]];
-    }
+    if ([simMan SIP_enabled])
+        _status_SIP.state = NSOnState;
+    else
+        _status_SIP.state = NSOffState;
+}
+
+- (IBAction)injectALL:(id)sender {
+    [simMan SIMBL_injectAll];
+}
+
+- (IBAction)injectOne:(id)sender {
+    [simMan SIMBL_injectApp:@"Messages" :true];
 }
 
 - (IBAction)installSIMBL:(id)sender {
     [simMan SIMBL_install];
-    NSLog(@"SIP can't block me 👊");
     [self setupWindow];
 }
 
 - (IBAction)installOSAX:(id)sender {
     [simMan OSAX_install];
-    NSLog(@"SIP can't block me 👊");
     [self setupWindow];
 }
 
 - (IBAction)installAgent:(id)sender {
     [simMan AGENT_install];
-    NSLog(@"SIP can't block me 👊");
     [self setupWindow];
 }
 
 - (IBAction)removeSIMBL:(id)sender {
     [simMan SIMBL_remove];
-    NSLog(@"SIP can't block me 👊");
     [self setupWindow];
 }
 

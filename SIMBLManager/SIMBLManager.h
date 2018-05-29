@@ -56,6 +56,7 @@ FOUNDATION_EXPORT const unsigned char SIMBLManagerVersionString[];
 - (IBAction)iconfirm:(id)sender;
 - (IBAction)confirmQuit:(id)sender;
 - (void)displayInWindow:(NSWindow*)window;
+- (void)addtoView:(NSView*)parentView;
 
 @end
 
@@ -68,6 +69,7 @@ FOUNDATION_EXPORT const unsigned char SIMBLManagerVersionString[];
 - (IBAction)install:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (void)displayInWindow:(NSWindow*)window;
-    
+- (void)addtoView:(NSView*)parentView;
+
 @end
 

@@ -10,6 +10,7 @@
 		FB0607761D1E0731008ECB55 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB0607751D1E0731008ECB55 /* MainMenu.xib */; };
 		FB0FCFD01D52B8150051D214 /* net.culater.SIMBL.Agent.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB0FCFCF1D52B8150051D214 /* net.culater.SIMBL.Agent.plist */; };
 		FB0FCFD11D52BA310051D214 /* SIMBL.sdef in Rez */ = {isa = PBXBuildFile; fileRef = FB0FCFCE1D52B8050051D214 /* SIMBL.sdef */; };
+		FB1120AB20B108F1005263B5 /* sipvid.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FB1120AA20B108F1005263B5 /* sipvid.mp4 */; };
 		FB26115A1E09CF87001C1DC7 /* STPrivilegedTask.h in Headers */ = {isa = PBXBuildFile; fileRef = FB2611581E09CF87001C1DC7 /* STPrivilegedTask.h */; };
 		FB26115B1E09CF87001C1DC7 /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2611591E09CF87001C1DC7 /* STPrivilegedTask.m */; };
 		FB31D4EE1D13AEB30067805D /* SIMBLManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4447B51D10BC5900FAEB6E /* SIMBLManager.framework */; };
@@ -24,7 +25,6 @@
 		FB53F93E1D35797900B07C67 /* SIMBLPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = FB53F9381D35797900B07C67 /* SIMBLPlugin.m */; };
 		FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB53F9401D3579B000B07C67 /* sim_c.xib */; };
 		FB53F9431D3579B000B07C67 /* sim_c.m in Sources */ = {isa = PBXBuildFile; fileRef = FB53F9411D3579B000B07C67 /* sim_c.m */; };
-		FB5ED2411FC3959900A17E55 /* sipvid.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FB5ED2401FC3959900A17E55 /* sipvid.mp4 */; };
 		FB5ED2441FC396D700A17E55 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5ED2431FC396D000A17E55 /* AVKit.framework */; };
 		FB5ED2451FC396DD00A17E55 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5ED2421FC396D000A17E55 /* AVFoundation.framework */; };
 		FB76398C1E1A54CD0050409C /* unsign in Resources */ = {isa = PBXBuildFile; fileRef = FB76398B1E1A54CD0050409C /* unsign */; };
@@ -117,6 +117,7 @@
 		FB0607751D1E0731008ECB55 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = FrameworksTest/MainMenu.xib; sourceTree = "<group>"; };
 		FB0FCFCE1D52B8050051D214 /* SIMBL.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SIMBL.sdef; sourceTree = "<group>"; };
 		FB0FCFCF1D52B8150051D214 /* net.culater.SIMBL.Agent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = net.culater.SIMBL.Agent.plist; sourceTree = "<group>"; };
+		FB1120AA20B108F1005263B5 /* sipvid.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sipvid.mp4; sourceTree = "<group>"; };
 		FB2611581E09CF87001C1DC7 /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
 		FB2611591E09CF87001C1DC7 /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
 		FB31D4CB1D13ADD30067805D /* SIMBL FrameworksTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SIMBL FrameworksTest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,7 +136,6 @@
 		FB53F9381D35797900B07C67 /* SIMBLPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SIMBLPlugin.m; path = SIMBLsrc/SIMBLPlugin.m; sourceTree = "<group>"; };
 		FB53F9401D3579B000B07C67 /* sim_c.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = sim_c.xib; sourceTree = "<group>"; };
 		FB53F9411D3579B000B07C67 /* sim_c.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sim_c.m; sourceTree = "<group>"; };
-		FB5ED2401FC3959900A17E55 /* sipvid.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = sipvid.mp4; path = ../../../Downloads/sipvid.mp4; sourceTree = "<group>"; };
 		FB5ED2421FC396D000A17E55 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FB5ED2431FC396D000A17E55 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		FB76398B1E1A54CD0050409C /* unsign */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = unsign; sourceTree = "<group>"; };
@@ -239,7 +239,7 @@
 		FB4447B71D10BC5900FAEB6E /* SIMBLManager */ = {
 			isa = PBXGroup;
 			children = (
-				FB5ED2401FC3959900A17E55 /* sipvid.mp4 */,
+				FB1120AA20B108F1005263B5 /* sipvid.mp4 */,
 				FB53F9441D3579B400B07C67 /* sim_c */,
 				FBB686E91D24F59300D9BCA5 /* sip_c */,
 				FB8124821D344466007DC7FA /* scripts */,
@@ -522,8 +522,8 @@
 				FBDD85321FD26F06007EE5C4 /* eng_sip.txt in Resources */,
 				FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */,
 				FB76398C1E1A54CD0050409C /* unsign in Resources */,
-				FB5ED2411FC3959900A17E55 /* sipvid.mp4 in Resources */,
 				FB76398E1E1A56D00050409C /* amfiswitch in Resources */,
+				FB1120AB20B108F1005263B5 /* sipvid.mp4 in Resources */,
 				FBB686EF1D24F72D00D9BCA5 /* sip_c.xib in Resources */,
 				FBDD85341FD27492007EE5C4 /* eng_sim.txt in Resources */,
 				FB81247A1D3443FF007DC7FA /* SIMBLAgent.app in Resources */,

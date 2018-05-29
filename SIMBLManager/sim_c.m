@@ -29,6 +29,17 @@
     }
 }
 
+- (void)addtoView:(NSView*)parentView {
+    NSView *t = self.window.contentView;
+    [t setFrameOrigin:NSMakePoint(
+                                  (NSWidth([parentView bounds]) - NSWidth([t frame])) / 2,
+                                  (NSHeight([parentView bounds]) - NSHeight([t frame])) / 2
+                                  )];
+    [t setAutoresizingMask:NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin];
+    [parentView addSubview:t];
+    [self close];
+}
+
 - (void)displayInWindow:(NSWindow*)window {
     NSWindow *simblWindow = self.window;
     NSPoint childOrigin = window.frame.origin;
@@ -60,34 +71,38 @@
 
 - (IBAction)install:(id)sender {
     SIMBLManager *m = [SIMBLManager sharedInstance];
-    Boolean agentUpdate = false;
-    Boolean systemUpdate = false;
+    Boolean agentUpdate = [m AGENT_needsUpdate];
+    Boolean systemUpdate = [m OSAX_needsUpdate];
+    Boolean SIP = [m SIP_enabled];
     Boolean weTried = false;
-    if ([m AGENT_needsUpdate])
-        agentUpdate = true;
-    
-    if ([m OSAX_needsUpdate])
-        systemUpdate = true;
 
-    if (systemUpdate == true && agentUpdate == true) {
-        [m SIMBL_install];
-        weTried = true;
+    if (systemUpdate && agentUpdate) {
+        if (SIP) {
+            sip_c *sipc = [[sip_c alloc] initWithWindowNibName:@"sip_c"];
+            [sipc showWindow:nil];
+        } else {
+            [m SIMBL_install];
+            weTried = true;
+        }
     }
 
-    if (systemUpdate == true && agentUpdate == false) {
-        [m OSAX_install];
-        weTried = true;
+    if (systemUpdate && agentUpdate) {
+        if (SIP) {
+            sip_c *sipc = [[sip_c alloc] initWithWindowNibName:@"sip_c"];
+            [sipc showWindow:nil];
+        } else {
+            [m OSAX_install];
+            weTried = true;
+        }
     }
 
-    if (agentUpdate == true && systemUpdate == false) {
+    if (systemUpdate && agentUpdate) {
         [m AGENT_install];
         weTried = true;
     }
     
-    if (weTried == false) {
+    if (weTried == false)
         [m SIMBL_install];
-        [m OSAX_install];
-    }
     
     [self close];
 }

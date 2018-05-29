@@ -82,6 +82,17 @@
     [player play];
 }
 
+- (void)addtoView:(NSView*)parentView {
+    NSView *t = self.window.contentView;
+    [t setFrameOrigin:NSMakePoint(
+                                        (NSWidth([parentView bounds]) - NSWidth([t frame])) / 2,
+                                        (NSHeight([parentView bounds]) - NSHeight([t frame])) / 2
+                                        )];
+    [t setAutoresizingMask:NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin];
+    [parentView addSubview:t];
+    [self close];
+}
+
 - (void)displayInWindow:(NSWindow*)window {
     NSWindow *simblWindow = self.window;
     NSPoint childOrigin = window.frame.origin;
