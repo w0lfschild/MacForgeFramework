@@ -13,4 +13,4 @@ mySIMBLFramework is a framework for installing/updating/removing a modern versio
 
 # License
 
-
+[License](https://github.com/w0lfschild/mySIMBLFramework/blob/master/LICENSE)
