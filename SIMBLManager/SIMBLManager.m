@@ -36,8 +36,10 @@ typedef uint32_t csr_config_t;
                         CSR_ALLOW_UNRESTRICTED_NVRAM)
 
 /* Syscalls */
-extern int csr_check(csr_config_t mask);
-extern int csr_get_active_config(csr_config_t *config);
+// mark these symbols as weakly linked, as they may not be available
+// at runtime on older OS X versions.
+extern int csr_check(csr_config_t mask) __attribute__((weak_import));
+extern int csr_get_active_config(csr_config_t* config) __attribute__((weak_import));
 
 /*
  * Our own implementation of csr_chec() that allows flipping the flag
@@ -47,6 +49,9 @@ bool _csr_check(int aMask, bool aFlipflag);
 
 bool _csr_check(int aMask, bool aFlipflag)
 {
+    if (!csr_check)
+        return (aFlipflag) ? 0 : 1; // return "UNRESTRICTED" when on old macOS version
+    
     return (aFlipflag) ? !(csr_check(aMask) != 0) : (csr_check(aMask) != 0);
 }
 
