@@ -12,6 +12,49 @@
 #import <Carbon/Carbon.h>
 #import <ScriptingBridge/ScriptingBridge.h>
 
+//
+//  SYSTEM INTEGRITY PROTECTION RELATED
+//
+
+typedef uint32_t csr_config_t;
+
+/* Rootless configuration flags */
+#define CSR_ALLOW_UNTRUSTED_KEXTS       (1 << 0)    // 1
+#define CSR_ALLOW_UNRESTRICTED_FS       (1 << 1)    // 2
+#define CSR_ALLOW_TASK_FOR_PID          (1 << 2)    // 4
+#define CSR_ALLOW_KERNEL_DEBUGGER       (1 << 3)    // 8
+#define CSR_ALLOW_APPLE_INTERNAL        (1 << 4)    // 16
+#define CSR_ALLOW_UNRESTRICTED_DTRACE   (1 << 5)    // 32
+#define CSR_ALLOW_UNRESTRICTED_NVRAM    (1 << 6)    // 64
+
+#define CSR_VALID_FLAGS (CSR_ALLOW_UNTRUSTED_KEXTS | \
+                        CSR_ALLOW_UNRESTRICTED_FS | \
+                        CSR_ALLOW_TASK_FOR_PID | \
+                        CSR_ALLOW_KERNEL_DEBUGGER | \
+                        CSR_ALLOW_APPLE_INTERNAL | \
+                        CSR_ALLOW_UNRESTRICTED_DTRACE | \
+                        CSR_ALLOW_UNRESTRICTED_NVRAM)
+
+/* Syscalls */
+// mark these symbols as weakly linked, as they may not be available
+// at runtime on older OS X versions.
+extern int csr_check(csr_config_t mask) __attribute__((weak_import));
+extern int csr_get_active_config(csr_config_t* config) __attribute__((weak_import));
+
+/*
+ * Our own implementation of csr_chec() that allows flipping the flag
+ * for easier information gathering.
+ */
+bool _csr_check(int aMask, bool aFlipflag);
+
+bool _csr_check(int aMask, bool aFlipflag)
+{
+    if (!csr_check)
+        return (aFlipflag) ? 0 : 1; // return "UNRESTRICTED" when on old macOS version
+    
+    return (aFlipflag) ? !(csr_check(aMask) != 0) : (csr_check(aMask) != 0);
+}
+
 #define BLKLIST @[@"Google Chrome Helper", @"SIMBLAgent", @"osascript"]
 
 @interface SIMBLManager ()
@@ -112,22 +155,9 @@ SIMBLManager* si_SIMBLManager;
 }
 
 - (Boolean)SIP_enabled {
-    BOOL result = false;
-    
-    NSPipe *pipe = [NSPipe pipe];
-    NSFileHandle *file = pipe.fileHandleForReading;
-    NSTask *task = [[NSTask alloc] init];
-    task.launchPath = @"/bin/sh";
-    task.arguments = @[@"-c", @"touch /System/test 2>&1"];
-    task.standardOutput = pipe;
-    [task launch];
-    NSData *data = [file readDataToEndOfFile];
-    [file closeFile];
-    NSString *output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    if ([output rangeOfString:@"Operation not permitted"].length)
-        result = true;
-    
-    return result;
+    BOOL allowsFS = _csr_check(CSR_ALLOW_UNRESTRICTED_FS, 0);
+    BOOL allowsInjection = _csr_check(CSR_ALLOW_UNRESTRICTED_DTRACE, 0);
+    return  !(allowsFS || allowsInjection);
 }
 
 // Hmmm don't think I should actually implement this but just in case
