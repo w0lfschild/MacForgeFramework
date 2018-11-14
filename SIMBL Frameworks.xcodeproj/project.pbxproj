@@ -215,7 +215,7 @@
 		FB4447AB1D10BC5900FAEB6E = {
 			isa = PBXGroup;
 			children = (
-				FB53F93F1D35797E00B07C67 /* src */,
+				FB53F93F1D35797E00B07C67 /* SIMBL Source */,
 				FB8124691D343A58007DC7FA /* Frameworks */,
 				FBA000EF1D1E066E00AC5C0C /* FrameworksTest */,
 				FB4447B71D10BC5900FAEB6E /* SIMBLManager */,
@@ -252,7 +252,7 @@
 			path = SIMBLManager;
 			sourceTree = "<group>";
 		};
-		FB53F93F1D35797E00B07C67 /* src */ = {
+		FB53F93F1D35797E00B07C67 /* SIMBL Source */ = {
 			isa = PBXGroup;
 			children = (
 				FB53F9311D35797900B07C67 /* DTMacros.h */,
@@ -264,7 +264,7 @@
 				FB53F9371D35797900B07C67 /* SIMBL.m */,
 				FB53F9381D35797900B07C67 /* SIMBLPlugin.m */,
 			);
-			name = src;
+			name = "SIMBL Source";
 			sourceTree = "<group>";
 		};
 		FB53F9441D3579B400B07C67 /* sim_c */ = {
