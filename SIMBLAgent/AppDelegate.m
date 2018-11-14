@@ -76,28 +76,35 @@ AppDelegate* this;
 }
 
 - (void)applescriptInject:(NSRunningApplication*)runningApp {
-    // Using applescript seems to work even though it's slow
-    NSDictionary* errorDict;
-    NSString *applescript =  [NSString stringWithFormat:@"\
-                              set doesExist to false\n\
-                              set appname to \"nill\"\n\
-                              try\n\
+    if (![runningApp.bundleIdentifier containsString:@"com.Logitech.Control"]) {
+        NSDictionary* errorDict;
+        NSString *applescript =  [NSString stringWithFormat:@"\
+                                  set doesExist to false\n\
+                                  set appname to \"nill\"\n\
+                                  try\n\
                                   tell application \"Finder\"\n\
-                                      set appname to name of application file id \"%@\"\n\
-                                      set doesExist to true\n\
+                                  set appname to name of application file id \"%@\"\n\
+                                  set doesExist to true\n\
                                   end tell\n\
-                              on error err_msg number err_num\n\
+                                  on error err_msg number err_num\n\
                                   return 0\n\
-                              end try\n\
-                              if doesExist then\n\
+                                  end try\n\
+                                  if doesExist then\n\
                                   with timeout of 2 seconds\n\
-                                      tell application appname to inject SIMBL into Snow Leopard\n\
+                                  tell application appname to inject SIMBL into Snow Leopard\n\
                                   end timeout\n\
                                   return appname\n\
-                              end if", runningApp.bundleIdentifier];
-    NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:applescript];
-    if ([[[NSWorkspace sharedWorkspace] runningApplications] containsObject:runningApp])
-        [scriptObject executeAndReturnError:&errorDict];
+                                  end if", runningApp.bundleIdentifier];
+        if ([runningApp.bundleIdentifier isEqualToString:@"com.apple.appkit.xpc.openAndSavePanelService"]) {
+            applescript =  @"with timeout of 2 seconds\n\
+            tell application \"com.apple.appkit.xpc.openAndSavePanelService\" to inject SIMBL into Snow Leopard\n\
+            end timeout";
+        }
+        NSLog(@"%@", runningApp.bundleIdentifier);
+        NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:applescript];
+        if ([[[NSWorkspace sharedWorkspace] runningApplications] containsObject:runningApp])
+            [scriptObject executeAndReturnError:&errorDict];
+    }
 }
 
 - (void)injectSIMBL:(NSRunningApplication*)runningApp {
@@ -148,7 +155,7 @@ AppDelegate* this;
     NSAppleEventDescriptor *app = [NSAppleEventDescriptor descriptorWithDescriptorType:typeKernelProcessID bytes:&pid length:sizeof(pid)];
     NSAppleEventDescriptor *ae;
     OSStatus err;
-    
+
     // Initialize applescript
     ae = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
                                                   eventID:kGetAEUT
@@ -156,7 +163,7 @@ AppDelegate* this;
                                                  returnID:kAutoGenerateReturnID
                                             transactionID:kAnyTransactionID];
     err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDontRecord); /* kAEWaitReply ? */
-    
+
     // Send load applescript
     ae = [NSAppleEventDescriptor appleEventWithEventClass:'SIMe'
                                                   eventID:'load'
@@ -164,7 +171,7 @@ AppDelegate* this;
                                                  returnID:kAutoGenerateReturnID
                                             transactionID:kAnyTransactionID];
     err = AESendMessage([ae aeDesc], NULL, kAENoReply | kAENeverInteract, kAEDontRecord);
-    
+
     if ((int)err != 0) {
         // Try to inject via applescript
         NSLog(@"Injecting into %@ failed trying applescript...", runningApp.localizedName);

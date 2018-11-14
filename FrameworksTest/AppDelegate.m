@@ -202,7 +202,7 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
 //        }
 //    }
     
-    [simc addtoView:_view_fill];
+//    [simc addtoView:_view_fill];
     
 //    [simc showWindow:self];
 //    [simc displayInWindow:self.window];
@@ -269,6 +269,14 @@ static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount)
         _status_SIP.state = NSOnState;
     else
         _status_SIP.state = NSOffState;
+}
+
+- (IBAction)showSIP:(id)sender {
+    [simc displayInWindow:self.window];
+}
+
+- (IBAction)showUpdate:(id)sender {
+    [sipc displayInWindow:self.window];
 }
 
 - (IBAction)injectALL:(id)sender {

@@ -15,7 +15,7 @@
 }
 
 - (void)awakeFromNib {
-    [[self window] setBackgroundColor:[NSColor whiteColor]];
+//    [[self window] setBackgroundColor:[NSColor whiteColor]];
     [[self window] setMovableByWindowBackground:true];
     [[self window] setLevel:NSFloatingWindowLevel];
     [[self window] setTitle:@""];
