@@ -46,6 +46,7 @@
 		FBA000F91D1E067D00AC5C0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA000F41D1E067D00AC5C0C /* main.m */; };
 		FBB686ED1D24F71100D9BCA5 /* sip_c.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB686EB1D24F71100D9BCA5 /* sip_c.m */; };
 		FBB686EF1D24F72D00D9BCA5 /* sip_c.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB686EE1D24F72D00D9BCA5 /* sip_c.xib */; };
+		FBC613DB21A6C85F0091243F /* eng_sip_mojave.txt in Resources */ = {isa = PBXBuildFile; fileRef = FBC613DA21A6C85F0091243F /* eng_sip_mojave.txt */; };
 		FBCC67A91D39FB8B00B30755 /* installSIMBL in Resources */ = {isa = PBXBuildFile; fileRef = FBCC67A81D39FB8B00B30755 /* installSIMBL */; };
 		FBDD85321FD26F06007EE5C4 /* eng_sip.txt in Resources */ = {isa = PBXBuildFile; fileRef = FBDD85311FD26F06007EE5C4 /* eng_sip.txt */; };
 		FBDD85341FD27492007EE5C4 /* eng_sim.txt in Resources */ = {isa = PBXBuildFile; fileRef = FBDD85331FD27492007EE5C4 /* eng_sim.txt */; };
@@ -161,6 +162,7 @@
 		FBA000F51D1E067D00AC5C0C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FrameworksTest/Info.plist; sourceTree = "<group>"; };
 		FBB686EB1D24F71100D9BCA5 /* sip_c.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sip_c.m; sourceTree = "<group>"; };
 		FBB686EE1D24F72D00D9BCA5 /* sip_c.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = sip_c.xib; sourceTree = "<group>"; };
+		FBC613DA21A6C85F0091243F /* eng_sip_mojave.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = eng_sip_mojave.txt; sourceTree = "<group>"; };
 		FBCC67A81D39FB8B00B30755 /* installSIMBL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = installSIMBL; sourceTree = "<group>"; };
 		FBDD85311FD26F06007EE5C4 /* eng_sip.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eng_sip.txt; sourceTree = "<group>"; };
 		FBDD85331FD27492007EE5C4 /* eng_sim.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eng_sim.txt; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				FBB686EB1D24F71100D9BCA5 /* sip_c.m */,
 				FBB686EE1D24F72D00D9BCA5 /* sip_c.xib */,
 				FBDD85311FD26F06007EE5C4 /* eng_sip.txt */,
+				FBC613DA21A6C85F0091243F /* eng_sip_mojave.txt */,
 			);
 			name = sip_c;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				FB8124811D344460007DC7FA /* removeSIMBL in Resources */,
 				FBCC67A91D39FB8B00B30755 /* installSIMBL in Resources */,
 				FBDD85321FD26F06007EE5C4 /* eng_sip.txt in Resources */,
+				FBC613DB21A6C85F0091243F /* eng_sip_mojave.txt in Resources */,
 				FB53F9421D3579B000B07C67 /* sim_c.xib in Resources */,
 				FB76398C1E1A54CD0050409C /* unsign in Resources */,
 				FB76398E1E1A56D00050409C /* amfiswitch in Resources */,

@@ -7,8 +7,6 @@ In order to complete the installation follow these instructions:
 1 : Restart your computer
 2 : Boot to recovery partition by holding (Command [⌘] +  R)
 3 : Open terminal from the menubar
-4 : Paste this command: csrutil disable
-5 : Press return or enter
-6 : Reboot
-
-You can re-enable System Integrity Protection after <appname> updates it's system components.
+4 : Paste this command: csrutil disable; reboot
+5 : Press return
+7 : You may re-enable System Integrity Protection after <appname> updates it's system components.

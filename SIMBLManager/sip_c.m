@@ -14,6 +14,8 @@
 
 @interface sip_c ()
 @property IBOutlet NSTextField *tv;
+@property IBOutlet NSButton *confirmQuit;
+@property IBOutlet NSButton *confirmReboot;
 @end
 
 @interface NoInteractPlayer : AVPlayerView
@@ -50,13 +52,34 @@
     [[self window] setMovableByWindowBackground:true];
     [[self window] setLevel:NSFloatingWindowLevel];
     [[self window] setTitle:@""];
+    [[self confirm] setKeyEquivalentModifierMask:0];
     [[self confirm] setKeyEquivalent:@"\r"];
+    
+    NSWindow *_window = [self window];
+    Class vibrantClass=NSClassFromString(@"NSVisualEffectView");
+    if (vibrantClass) {
+        NSVisualEffectView *vibrant=[[vibrantClass alloc] initWithFrame:[[_window contentView] bounds]];
+        [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+        [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+        [vibrant setState:NSVisualEffectStateActive];
+        [[_window contentView] addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+    } else {
+        [_window setBackgroundColor:[NSColor whiteColor]];
+    }
+    [_window.contentView setWantsLayer:YES];
     
     NSError *err;
     NSString *app = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     if (app == nil) app = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
     if (app == nil) app = @"macOS Plugin Framework";
-    NSString *text = [NSString stringWithContentsOfURL:[[NSBundle bundleForClass:[SIMBLManager class]] URLForResource:@"eng_sip" withExtension:@"txt"] encoding:NSUTF8StringEncoding error:&err];
+    
+    NSString *sipFile = @"eng_sip";
+    if (NSProcessInfo.processInfo.operatingSystemVersion.minorVersion > 13) sipFile = @"eng_sip_mojave";
+        
+    NSString *text = [NSString stringWithContentsOfURL:[[NSBundle bundleForClass:[SIMBLManager class]]
+                                        URLForResource:sipFile withExtension:@"txt"]
+                                              encoding:NSUTF8StringEncoding
+                                                 error:&err];
     text = [text stringByReplacingOccurrencesOfString:@"<appname>" withString:app];
     [_tv setStringValue:text];
     
@@ -105,6 +128,10 @@
 - (void)playerItemDidReachEnd:(NSNotification *)notification {
     AVPlayerItem *p = [notification object];
     [p seekToTime:CMTimeMake(0, p.asset.duration.timescale)];
+}
+
+- (IBAction)reboot:(id)sender {
+    system("osascript -e 'tell application \"Finder\" to restart'");
 }
 
 - (IBAction)iconfirm:(id)sender {

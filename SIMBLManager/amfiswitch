@@ -14,10 +14,8 @@ trim() {
     var="${var#"${var%%[![:space:]]*}"}"
     # remove trailing whitespace characters
     var="${var%"${var##*[![:space:]]}"}"
-
 #    var=$(echo "$var" | tr -s " ")
 #    var=$(echo "$var" | sed -e 's,\\[trn],,g')
-
     echo "$var"
 }
 
@@ -29,7 +27,6 @@ else
 fi
 
 newargs=$(trim "$newargs")
-
 nvram boot-args="$newargs"
-
+nvram boot-args
 echo "Done"

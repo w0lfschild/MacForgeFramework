@@ -20,6 +20,20 @@
     [[self window] setLevel:NSFloatingWindowLevel];
     [[self window] setTitle:@""];
     [[self accept] setKeyEquivalent:@"\r"];
+    
+    NSWindow *_window = [self window];
+    Class vibrantClass=NSClassFromString(@"NSVisualEffectView");
+    if (vibrantClass) {
+        NSVisualEffectView *vibrant=[[vibrantClass alloc] initWithFrame:[[_window contentView] bounds]];
+        [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+        [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+        [vibrant setState:NSVisualEffectStateActive];
+        [[_window contentView] addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+    } else {
+        [_window setBackgroundColor:[NSColor whiteColor]];
+    }
+    [_window.contentView setWantsLayer:YES];
+    
     [_tv setStringValue:[self getText]];
     if (_tv.stringValue.length > 0) {
         NSFont* f = [NSFont userFontOfSize:13];
